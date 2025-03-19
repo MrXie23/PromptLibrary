@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Library - 探索AI提示的艺术</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <header>
+            <nav>
+                <div class="logo">Prompt<span>Library</span></div>
+                <div class="nav-links">
+                    <a href="#" class="active">首页</a>
+                    <a href="#">分类</a>
+                    <a href="#">热门</a>
+                    <a href="#">关于</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button class="theme-toggle"><i class="fa-solid fa-moon"></i></button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- 英雄区域 -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>发现最佳AI提示词</h1>
+                <p>探索、使用并分享经过精心策划的提示词库，释放AI的全部潜力</p>
+                <div class="search-container">
+                    <input type="text" placeholder="搜索提示词..." id="search-input">
+                    <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 特色提示词 -->
+        <section class="featured">
+            <div class="section-header">
+                <h2>精选提示词</h2>
+                <a href="#" class="view-all">查看全部 <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+            <div class="prompt-grid">
+                <div class="prompt-card featured">
+                    <div class="prompt-label">热门</div>
+                    <h3>专业文章生成器</h3>
+                    <p>创建结构化、专业的文章，包含引人入胜的标题、精确的小标题和丰富的内容。</p>
+                    <div class="prompt-meta">
+                        <span class="category">内容创作</span>
+                        <span class="popularity"><i class="fa-solid fa-star"></i> 9.8</span>
+                    </div>
+                    <a href="#" class="view-button">查看详情</a>
+                </div>
+                <div class="prompt-card">
+                    <h3>代码优化助手</h3>
+                    <p>分析并优化您的代码，提供性能改进建议和最佳实践指导。</p>
+                    <div class="prompt-meta">
+                        <span class="category">编程</span>
+                        <span class="popularity"><i class="fa-solid fa-star"></i> 9.5</span>
+                    </div>
+                    <a href="#" class="view-button">查看详情</a>
+                </div>
+                <div class="prompt-card">
+                    <h3>创意故事构建器</h3>
+                    <p>根据您的主题和风格偏好，生成引人入胜的故事开头、情节和角色。</p>
+                    <div class="prompt-meta">
+                        <span class="category">创意写作</span>
+                        <span class="popularity"><i class="fa-solid fa-star"></i> 9.3</span>
+                    </div>
+                    <a href="#" class="view-button">查看详情</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 分类浏览 -->
+        <section class="categories">
+            <div class="section-header">
+                <h2>按分类浏览</h2>
+            </div>
+            <div class="category-container">
+                <div class="category-item">
+                    <div class="category-icon"><i class="fa-solid fa-pen-fancy"></i></div>
+                    <div class="category-info">
+                        <h3>内容创作</h3>
+                        <p>24个提示词</p>
+                    </div>
+                </div>
+                <div class="category-item">
+                    <div class="category-icon"><i class="fa-solid fa-code"></i></div>
+                    <div class="category-info">
+                        <h3>编程开发</h3>
+                        <p>18个提示词</p>
+                    </div>
+                </div>
+                <div class="category-item">
+                    <div class="category-icon"><i class="fa-solid fa-palette"></i></div>
+                    <div class="category-info">
+                        <h3>创意设计</h3>
+                        <p>15个提示词</p>
+                    </div>
+                </div>
+                <div class="category-item">
+                    <div class="category-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="category-info">
+                        <h3>数据分析</h3>
+                        <p>12个提示词</p>
+                    </div>
+                </div>
+                <div class="category-item">
+                    <div class="category-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                    <div class="category-info">
+                        <h3>营销推广</h3>
+                        <p>20个提示词</p>
+                    </div>
+                </div>
+                <div class="category-item">
+                    <div class="category-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <div class="category-info">
+                        <h3>教育学习</h3>
+                        <p>16个提示词</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 最近添加 -->
+        <section class="recent">
+            <div class="section-header">
+                <h2>最近添加</h2>
+                <a href="#" class="view-all">查看全部 <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+            <div class="prompt-grid">
+                <div class="prompt-card">
+                    <div class="prompt-label new">新增</div>
+                    <h3>产品描述生成器</h3>
+                    <p>创建引人注目的产品描述，突出特点、优势和价值主张。</p>
+                    <div class="prompt-meta">
+                        <span class="category">电商</span>
+                        <span class="date">2天前</span>
+                    </div>
+                    <a href="#" class="view-button">查看详情查看详情</a>
+                </div>
+                <div class="prompt-card">
+                    <div class="prompt-label new">新增</div>
+                    <h3>简历优化建议</h3>
+                    <p>分析您的简历，提供针对性的改进建议，突出关键技能和成就。</p>
+                    <div class="prompt-meta">
+                        <span class="category">职业发展</span>
+                        <span class="date">4天前</span>
+                    </div>
+                    <a href="#" class="view-button">查看详情</a>
+                </div>
+                <div class="prompt-card">
+                    <div class="prompt-label new">新增</div>
+                    <h3>学习计划制定器</h3>
+                    <p>基于您的学习目标和时间安排，创建个性化的学习路径和进度计划。</p>
+                    <div class="prompt-meta">
+                        <span class="category">教育学习</span>
+                        <span class="date">5天前</span>
+                    </div>
+                    <a href="#" class="view-button">查看详情</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 订阅区域 -->
+        <section class="subscribe">
+            <div class="subscribe-content">
+                <h2>获取最新提示词更新</h2>
+                <p>订阅我们的通讯，第一时间获取新增提示词和使用技巧</p>
+                <div class="subscribe-form">
+                    <input type="email" placeholder="您的邮箱地址">
+                    <button>订阅</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer>
+            <div class="footer-top">
+                <div class="logo-section">
+                    <div class="logo">Prompt<span>Library</span></div>
+                    <p>探索AI提示的艺术</p>
+                </div>
+                
+                <div class="footer-nav">
+                    <div class="footer-section">
+                        <h4>导航</h4>
+                        <a href="#">首页</a>
+                        <a href="#">分类</a>
+                        <a href="#">热门</a>
+                        <a href="#">最新</a>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>资源</h4>
+                        <a href="#">使用指南</a>
+                        <a href="#">提示词技巧</a>
+                        <a href="#">常见问题</a>
+                        <a href="#">贡献指南</a>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>关于我们</h4>
+                        <a href="#">项目介绍</a>
+                        <a href="#">联系我们</a>
+                        <a href="#">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 PromptLibrary. 保留所有权利。</p>
+                <div class="social-links">
+                    <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
