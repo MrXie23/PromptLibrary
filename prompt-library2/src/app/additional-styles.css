@@ -1,0 +1,291 @@
+
+/* additional-styles.css */
+
+/* 页面通用样式 */
+.page-header {
+  text-align: center;
+  margin-bottom: 48px;
+  padding: 48px 0;
+}
+
+.page-header h1 {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.page-header p {
+  font-size: 20px;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.content-section {
+  max-width: 800px;
+  margin: 0 auto 64px;
+  line-height: 1.6;
+}
+
+.content-section h2 {
+  font-size: 28px;
+  margin: 40px 0 16px;
+}
+
+.content-section h3 {
+  font-size: 22px;
+  margin: 32px 0 12px;
+}
+
+.content-section p {
+  margin-bottom: 16px;
+}
+
+.content-section ul, .content-section ol {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.content-section li {
+  margin-bottom: 8px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  transition: var(--transition);
+}
+
+.back-link:hover {
+  color: var(--primary-color);
+}
+
+/* 提示词详情页样式 */
+.prompt-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 0;
+}
+
+.prompt-header {
+  margin-bottom: 48px;
+}
+
+.prompt-header h1 {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.prompt-content {
+  background-color: var(--card-background);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+.prompt-content h2 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.prompt-content .description {
+  margin-bottom: 32px;
+}
+
+.markdown-content {
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.markdown-content h1 {
+  font-size: 28px;
+  margin: 24px 0 16px;
+}
+
+.markdown-content h2 {
+  font-size: 24px;
+  margin: 24px 0 16px;
+  border-bottom: none;
+}
+
+.markdown-content h3 {
+  font-size: 20px;
+  margin: 24px 0 16px;
+}
+
+.markdown-content p {
+  margin-bottom: 16px;
+}
+
+.markdown-content ul, .markdown-content ol {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.markdown-content li {
+  margin-bottom: 8px;
+}
+
+.markdown-content pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 16px 0;
+}
+
+.markdown-content code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 14px;
+}
+
+.prompt-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.prompt-actions button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.copy-button {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.copy-button:hover {
+  background-color: var(--highlight-color);
+}
+
+.share-button {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.share-button:hover {
+  background-color: var(--border-color);
+}
+
+/* 贡献页面样式 */
+/* 贡献页面样式 */
+.steps-container {
+    margin: 32px 0;
+  }
+
+.step {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.template-container {
+  background-color: var(--card-background);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 24px 0;
+}
+
+.template-container h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.template-container pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.template-container code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 14px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.view-button.secondary {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.view-button.secondary:hover {
+  background-color: var(--border-color);
+}
+
+/* 404页面样式 */
+.not-found {
+  text-align: center;
+  padding: 80px 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.not-found h1 {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.not-found p {
+  font-size: 20px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+/* 搜索结果页面 */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 18px;
+  color: var(--text-secondary);
+  height: 200px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 0;
+}
+
+.empty-state p {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}

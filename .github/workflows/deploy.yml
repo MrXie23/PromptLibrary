@@ -1,0 +1,63 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ] # 或者你的默认分支名称
+    paths:
+      - 'prompt-library2/**' # 只在 prompt-library2 目录变更时触发
+
+# 设置 GITHUB_TOKEN 的权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 只允许一个并发部署
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: 'npm'
+          cache-dependency-path: prompt-library2/package-lock.json
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      
+      - name: Install dependencies
+        run: cd prompt-library2 && npm ci
+      
+      - name: Create .nojekyll file
+        run: touch prompt-library2/public/.nojekyll
+      
+      - name: Generate index
+        run: cd prompt-library2 && node scripts/generate-index.js
+      
+      - name: Build
+        run: cd prompt-library2 && npm run build
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./prompt-library2/out
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
