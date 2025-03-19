@@ -1,0 +1,41 @@
+{
+  "name": "prompt-library",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/generate-index.js && next dev",
+    "build": "node scripts/generate-index.js && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next export"
+  },
+  "dependencies": {
+    "next": "^13.4.19",
+    "next-mdx-remote": "^5.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "remark": "^14.0.3",
+    "remark-html": "^15.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "copy-webpack-plugin": "^13.0.0",
+    "eslint": "^8.36.0",
+    "eslint-config-next": "^13.4.19",
+    "gray-matter": "^4.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "overrides": {
+    "next": {
+      "engines": {
+        "node": ">=16.0.0"
+      }
+    }
+  }
+}
