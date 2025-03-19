@@ -32,7 +32,7 @@ export async function generateStaticParams() {
   const promptsDirectory = path.join(process.cwd(), 'prompts');
   const files = fs.readdirSync(promptsDirectory);
 
-  const params = [];
+  const params: Array<{ slug: string }> = [];
 
   files.forEach((file) => {
     if (file.endsWith('.md')) {
