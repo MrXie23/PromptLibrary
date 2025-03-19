@@ -5,7 +5,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: "/PromptLibrary", // 修改为您的GitHub仓库名称
+  basePath: "/PromptLibrary", // 确保与GitHub仓库名一致
 
   // 确保提示词文件被复制到输出目录
   webpack: (config) => {
