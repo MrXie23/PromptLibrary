@@ -4,10 +4,10 @@ import PromptCard from '@/components/PromptCard';
 import CategoryItem from '@/components/CategoryItem';
 import Subscribe from '@/components/Subscribe';
 import Link from 'next/link';
-import { 
-  getFeaturedPrompts, 
+import {
+  getFeaturedPrompts,
   getRecentPrompts,
-  getAllCategories 
+  getAllCategories
 } from '@/lib/prompts';
 
 export const metadata: Metadata = {
@@ -19,11 +19,11 @@ export default function Home() {
   const featuredPrompts = getFeaturedPrompts();
   const recentPrompts = getRecentPrompts();
   const categories = getAllCategories();
-  
+
   return (
     <main>
       <Hero />
-      
+
       {/* 特色提示词 */}
       <section className="featured">
         <div className="section-header">
@@ -34,15 +34,15 @@ export default function Home() {
         </div>
         <div className="prompt-grid">
           {featuredPrompts.map((prompt, index) => (
-            <PromptCard 
-              key={prompt.slug} 
-              prompt={prompt} 
-              featured={index === 0} 
+            <PromptCard
+              key={prompt.slug}
+              prompt={prompt}
+              featured={index === 0}
             />
           ))}
         </div>
       </section>
-      
+
       {/* 分类浏览 */}
       <section className="categories">
         <div className="section-header">
@@ -54,7 +54,7 @@ export default function Home() {
           ))}
         </div>
       </section>
-      
+
       {/* 最近添加 */}
       <section className="recent">
         <div className="section-header">
@@ -65,15 +65,15 @@ export default function Home() {
         </div>
         <div className="prompt-grid">
           {recentPrompts.map(prompt => (
-            <PromptCard 
-              key={prompt.slug} 
-              prompt={prompt} 
-              isNew={true} 
+            <PromptCard
+              key={prompt.slug}
+              prompt={prompt}
+              isNew={true}
             />
           ))}
         </div>
       </section>
-      
+
       {/* 订阅区域 */}
       <Subscribe />
     </main>

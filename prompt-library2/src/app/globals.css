@@ -1,4 +1,5 @@
 @import './additional-styles.css';
+
 /* 基础样式 */
 :root {
   --primary-color: #0071e3;
@@ -37,7 +38,10 @@ body {
   padding: 0 20px;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-weight: 600;
 }
 
@@ -111,7 +115,8 @@ nav {
   font-weight: 500;
 }
 
-.nav-links a:hover, .nav-links a.active {
+.nav-links a:hover,
+.nav-links a.active {
   color: var(--text-color);
 }
 
@@ -120,7 +125,8 @@ nav {
   gap: 16px;
 }
 
-.nav-actions button {
+.nav-actions button,
+.nav-actions .search-btn {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -131,7 +137,8 @@ nav {
   background-color: var(--card-background);
 }
 
-.nav-actions button:hover {
+.nav-actions button:hover,
+.nav-actions .search-btn:hover {
   color: var(--text-color);
   background-color: #e8e8ed;
 }
@@ -160,34 +167,48 @@ nav {
   font-size: 20px;
   color: var(--text-secondary);
   margin-bottom: 32px;
-}.search-container {
+}
+
+.search-container {
   display: flex;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+  position: relative;
 }
 
 .search-container input {
   flex: 1;
-  padding: 16px 24px;
-  font-size: 18px;
+  padding: 12px 20px;
+  font-size: 16px;
   border-radius: 100px;
   border: none;
   background-color: var(--card-background);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.search-container input:focus {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  background-color: var(--background-color);
 }
 
 .search-button {
   background-color: var(--primary-color);
   color: white;
-  font-size: 18px;
-  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 20px;
   border-radius: 100px;
-  margin-left: -50px;
-  
+  margin-left: -45px;
+  z-index: 1;
+  transition: all 0.3s ease;
 }
 
 .search-button:hover {
   background-color: var(--highlight-color);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* 提示词卡片样式 */
@@ -283,7 +304,8 @@ nav {
   font-weight: 500;
 }
 
-.popularity, .date {
+.popularity,
+.date {
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -291,18 +313,21 @@ nav {
 }
 
 .view-button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
   background-color: var(--primary-color);
   color: white;
-  padding: 8px 16px;
   border-radius: 100px;
   font-weight: 500;
-  text-align: center;
   transition: var(--transition);
+  text-align: center;
 }
 
 .view-button:hover {
   background-color: var(--highlight-color);
+  transform: translateY(-2px);
 }
 
 /* 分类样式 */
@@ -491,81 +516,81 @@ footer {
 /* 深色模式 */
 @media (prefers-color-scheme: dark) {
   :root {
-      --background-color: #000000;
-      --card-background: #1c1c1e;
-      --text-color: #ffffff;
-      --text-secondary: #86868b;
-      --border-color: #38383c;
-      --shadow-color: rgba(0, 0, 0, 0.2);
+    --background-color: #000000;
+    --card-background: #1c1c1e;
+    --text-color: #ffffff;
+    --text-secondary: #86868b;
+    --border-color: #38383c;
+    --shadow-color: rgba(0, 0, 0, 0.2);
   }
-  
+
   header {
-      background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
   }
-  
+
   .nav-actions button {
-      background-color: #1c1c1e;
+    background-color: #1c1c1e;
   }
-  
+
   .nav-actions button:hover {
-      background-color: #2c2c2e;
+    background-color: #2c2c2e;
   }
-  
+
   .search-container input {
-      background-color: #1c1c1e;
+    background-color: #1c1c1e;
   }
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
   .hero h1 {
-      font-size: 36px;
+    font-size: 36px;
   }
-  
+
   .hero p {
-      font-size: 18px;
+    font-size: 18px;
   }
-  
+
   .prompt-grid {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
-  
+
   .category-container {
-      flex-direction: column;
+    flex-direction: column;
   }
-  
+
   .category-item {
-      width: 100%;
+    width: 100%;
   }
-  
+
   .subscribe {
-      padding: 32px;
+    padding: 32px;
   }
-  
+
   .subscribe-form {
-      flex-direction: column;
+    flex-direction: column;
   }
-  
+
   .footer-top {
-      flex-direction: column;
-      gap: 32px;
+    flex-direction: column;
+    gap: 32px;
   }
-  
+
   .footer-nav {
-      flex-direction: column;
-      gap: 32px;
+    flex-direction: column;
+    gap: 32px;
   }
-  
+
   .footer-bottom {
-      flex-direction: column;
-      gap: 16px;
-      text-align: center;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
   }
 }
 
 @media (max-width: 992px) and (min-width: 769px) {
   .category-item {
-      width: calc(50% - 10px);
+    width: calc(50% - 10px);
   }
 }
 
@@ -573,28 +598,33 @@ footer {
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* 确保body至少占满整个视口高度 */
+  min-height: 100vh;
+  /* 确保body至少占满整个视口高度 */
   margin: 0;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  flex: 1; /* 让container填充可用空间 */
+  flex: 1;
+  /* 让container填充可用空间 */
 }
 
-main, 
+main,
 .search-content-container,
-.container > div:not(.footer) {
-  flex: 1 0 auto; /* 让内容区域填充可用空间，但允许增长 */
+.container>div:not(.footer) {
+  flex: 1 0 auto;
+  /* 让内容区域填充可用空间，但允许增长 */
 }
 
 .footer {
-  flex-shrink: 0; /* 防止footer被压缩 */
+  flex-shrink: 0;
+  /* 防止footer被压缩 */
   background-color: #f8f9fa;
   color: #333;
   padding: 3rem 0 1rem;
-  margin-top: auto; /* 将footer推到底部 */
+  margin-top: auto;
+  /* 将footer推到底部 */
   border-top: 1px solid #e9ecef;
 }
 
@@ -622,7 +652,8 @@ body.dark-mode .footer {
 }
 
 .footer-logo span {
-  color: #3182ce; /* 蓝色强调，与Header匹配 */
+  color: #3182ce;
+  /* 蓝色强调，与Header匹配 */
 }
 
 body.dark-mode .footer-logo span {
@@ -702,7 +733,7 @@ body.dark-mode .footer-bottom {
     flex-direction: column;
     gap: 1.5rem;
   }
-  
+
   .footer-links {
     flex-direction: column;
     gap: 1.5rem;

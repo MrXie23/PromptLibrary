@@ -15,13 +15,13 @@ interface PromptPageProps {
 
 export async function generateMetadata({ params }: PromptPageProps): Promise<Metadata> {
   const prompt = await getPromptData(params.slug);
-  
+
   if (!prompt) {
     return {
       title: '提示词未找到 - Prompt Library',
     };
   }
-  
+
   return {
     title: `${prompt.title} - Prompt Library`,
     description: prompt.description,
@@ -29,35 +29,35 @@ export async function generateMetadata({ params }: PromptPageProps): Promise<Met
 }
 
 export async function generateStaticParams() {
-    const promptsDirectory = path.join(process.cwd(), 'prompts');
-    const files = fs.readdirSync(promptsDirectory);
-    
-    const params = [];
-    
-    files.forEach((file) => {
-        if (file.endsWith('.md')) {
-            // 添加不带扩展名的路径
-            params.push({
-                slug: file.replace(/\.md$/, ''),
-            });
-            
-            // 也添加带扩展名的路径
-            params.push({
-                slug: file,
-            });
-        }
-    });
-    
-    return params;
+  const promptsDirectory = path.join(process.cwd(), 'prompts');
+  const files = fs.readdirSync(promptsDirectory);
+
+  const params = [];
+
+  files.forEach((file) => {
+    if (file.endsWith('.md')) {
+      // 添加不带扩展名的路径
+      params.push({
+        slug: file.replace(/\.md$/, ''),
+      });
+
+      // 也添加带扩展名的路径
+      params.push({
+        slug: file,
+      });
+    }
+  });
+
+  return params;
 }
 
 export default async function PromptPage({ params }: PromptPageProps) {
   const prompt = await getPromptData(params.slug);
-  
+
   if (!prompt) {
     notFound();
   }
-  
+
   return (
     <main className="prompt-detail">
       <section className="prompt-header">
@@ -79,24 +79,24 @@ export default async function PromptPage({ params }: PromptPageProps) {
           )}
         </div>
       </section>
-      
+
       <section className="prompt-content">
         <div className="description">
           <h2>描述</h2>
           <p>{prompt.description}</p>
         </div>
-        
+
         <div className="content">
           <h2>提示词内容</h2>
           <div className="markdown-content" dangerouslySetInnerHTML={{ __html: prompt.content || '' }} />
         </div>
-        
+
         <div className="usage">
           <h2>使用方法</h2>
           <p>将上述提示词复制到您喜欢的AI工具中，根据需要调整具体内容，然后开始创作！</p>
         </div>
       </section>
-      
+
       <section className="prompt-actions">
         <button className="copy-button">
           <i className="fa-solid fa-copy"></i> 复制提示词

@@ -2,13 +2,17 @@
   {
     "slug": "code-optimization-assistant",
     "title": "代码优化助手",
+    "description": "分析并优化您的代码，提供性能改进建议和最佳实践指导。",
+    "category": "编程开发",
     "tags": [],
-    "date": "2025-03-19T09:48:33.208Z"
+    "date": "2025-03-19T14:58:12.866Z"
   },
   {
     "slug": "professional-article-generator",
     "title": "专业文章生成器",
+    "description": "创建结构化、专业的文章，包含引人入胜的标题、精确的小标题和丰富的内容。",
+    "category": "内容创作",
     "tags": [],
-    "date": "2025-03-19T09:48:33.209Z"
+    "date": "2025-03-19T14:58:12.870Z"
   }
 ]

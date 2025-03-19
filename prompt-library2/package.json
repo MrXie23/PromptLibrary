@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "dev": "node scripts/generate-index.js && next dev",
-  "build": "node scripts/generate-index.js && next build",
-  "start": "next start",
-  "lint": "next lint"
-},
+    "dev": "node scripts/generate-index.js && next dev",
+    "build": "node scripts/generate-index.js && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next export"
+  },
   "dependencies": {
     "next": "^13.4.19",
     "next-mdx-remote": "^5.0.0",
