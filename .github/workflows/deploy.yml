@@ -2,9 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main,feature/github-prompt-fetching  ] # 或者你的默认分支名称
-    paths:
-      - 'prompt-library2/**' # 只在 prompt-library2 目录变更时触发
+    branches: [main] # 只在main分支上触发
+  workflow_dispatch: # 允许手动触发
 
 # 设置 GITHUB_TOKEN 的权限
 permissions:
@@ -15,37 +14,39 @@ permissions:
 # 只允许一个并发部署
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      
+        uses: actions/checkout@v4
+
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: "18"
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
           cache-dependency-path: prompt-library2/package-lock.json
-      
+
       - name: Setup Pages
-        uses: actions/configure-pages@v3
-      
+        uses: actions/configure-pages@v4
+        with:
+          static_site_generator: next
+
       - name: Install dependencies
         run: cd prompt-library2 && npm ci
-      
+
       - name: Create .nojekyll file
         run: touch prompt-library2/public/.nojekyll
-      
+
       - name: Generate index
         run: cd prompt-library2 && node scripts/generate-index.js
-      
+
       - name: Build
         run: cd prompt-library2 && npm run build
-      
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -60,4 +61,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
