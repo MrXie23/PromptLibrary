@@ -30,6 +30,8 @@ Visit the live site: [Prompt Library](https://mrxie23.github.io/PromptLibrary/)
 - GitHub Pages for hosting
 
 ## 📁 Project Structure
+
+```
 prompt-library/
 ├── docs/                 # Website files (GitHub Pages)
 │   ├── index.html        # Main page
@@ -38,6 +40,7 @@ prompt-library/
 │   └── images/           # Image assets
 ├── README.md             # Project documentation
 └── .gitignore            # Git ignore file
+```
 
 ## 🔮 Roadmap
 
