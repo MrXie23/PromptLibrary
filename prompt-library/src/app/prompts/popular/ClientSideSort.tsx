@@ -73,7 +73,7 @@ export default function ClientSideSort({ prompts }: ClientSideSortProps) {
             {/* 提示词列表 */}
             {sortedPrompts.length > 0 ? (
                 <div className={styles['prompt-grid']}>
-                    {sortedPrompts.map((prompt, index) => (
+                    {sortedPrompts.slice(0, 9).map((prompt, index) => (
                         <PromptCard
                             key={prompt.slug}
                             prompt={prompt}
