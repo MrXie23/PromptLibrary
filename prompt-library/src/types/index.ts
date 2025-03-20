@@ -14,5 +14,5 @@ export interface PromptData {
     slug: string;
     name: string;
     icon: string;
-    count: number;
+    count?: number;
   }

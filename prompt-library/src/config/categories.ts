@@ -2,13 +2,13 @@ import { CategoryData } from '@/types';
 
 // 类别配置
 export const CATEGORIES: CategoryData[] = [
-  { slug: 'content-creation', name: '内容创作', icon: 'fa-pen-fancy' },
-  { slug: 'programming', name: '编程开发', icon: 'fa-code' },
-  { slug: 'creative-design', name: '创意设计', icon: 'fa-palette' },
-  { slug: 'data-analysis', name: '数据分析', icon: 'fa-chart-line' },
-  { slug: 'marketing', name: '营销推广', icon: 'fa-bullhorn' },
-  { slug: 'education', name: '教育学习', icon: 'fa-graduation-cap' },
-  { slug: 'other', name: '其他', icon: 'fa-ellipsis' }
+  { slug: 'content-creation', name: '内容创作', icon: 'fa-pen-fancy', count: 0 },
+  { slug: 'programming', name: '编程开发', icon: 'fa-code', count: 0 },
+  { slug: 'creative-design', name: '创意设计', icon: 'fa-palette', count: 0 },
+  { slug: 'data-analysis', name: '数据分析', icon: 'fa-chart-line', count: 0 },
+  { slug: 'marketing', name: '营销推广', icon: 'fa-bullhorn', count: 0 },
+  { slug: 'education', name: '教育学习', icon: 'fa-graduation-cap', count: 0 },
+  { slug: 'other', name: '其他', icon: 'fa-ellipsis', count: 0 }
 ];
 
 // 中文名称到英文slug的映射
