@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定义Apple样式 */
+@layer base {
+    body {
+        @apply antialiased text-apple-black bg-apple-gray font-sans;
+    }
+}
+
+@layer components {
+
+    /* Apple风格按钮 */
+    .btn-apple-primary {
+        @apply bg-apple-blue text-white font-medium px-5 py-2 rounded-full shadow-sm hover:bg-opacity-90 transition-all focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-opacity-50 active:scale-[0.98];
+    }
+
+    .btn-apple-secondary {
+        @apply bg-white text-apple-blue border border-apple-blue font-medium px-5 py-2 rounded-full shadow-sm hover:bg-apple-blue hover:bg-opacity-5 transition-all focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-opacity-50 active:scale-[0.98];
+    }
+
+    /* Apple风格的输入框 */
+    .input-apple {
+        @apply w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-apple-blue focus:border-transparent transition-all placeholder-apple-darkGray text-apple-black;
+    }
+
+    /* Apple风格的卡片 */
+    .card-apple {
+        @apply bg-white rounded-xl shadow-apple-sm p-6 hover:shadow-apple-md transition-all;
+    }
+
+    /* Apple风格的标题 */
+    .title-apple {
+        @apply text-2xl font-semibold text-apple-black;
+    }
+
+    /* Apple风格的标签 */
+    .tag-apple {
+        @apply px-3 py-1 text-sm font-medium rounded-full;
+    }
+}
+
+/* 动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* SF Pro字体（如果可用） */
+@font-face {
+    font-family: 'SF Pro Display';
+    src: local('SF Pro Display');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Pro Display';
+    src: local('SF Pro Display Bold');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* 修复一些Tailwind和Apple设计的不一致 */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
