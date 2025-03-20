@@ -5,7 +5,22 @@ import { notFound } from 'next/navigation';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import dynamic from 'next/dynamic';
 
+// 动态导入客户端组件，避免 SSR 期间的错误
+const PromptActions = dynamic(() => import('@/components/PromptActions'), {
+  ssr: false,
+  loading: () => (
+    <section className="prompt-actions">
+      <button className="copy-button" disabled>
+        <i className="fa-solid fa-copy"></i> 复制提示词
+      </button>
+      <button className="share-button" disabled>
+        <i className="fa-solid fa-share-nodes"></i> 分享
+      </button>
+    </section>
+  )
+});
 
 interface PromptPageProps {
   params: {
@@ -97,14 +112,7 @@ export default async function PromptPage({ params }: PromptPageProps) {
         </div>
       </section>
 
-      <section className="prompt-actions">
-        <button className="copy-button">
-          <i className="fa-solid fa-copy"></i> 复制提示词
-        </button>
-        <button className="share-button">
-          <i className="fa-solid fa-share-nodes"></i> 分享
-        </button>
-      </section>
+      <PromptActions prompt={prompt} />
     </main>
   );
 }

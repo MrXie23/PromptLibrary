@@ -148,6 +148,7 @@
   display: flex;
   gap: 16px;
   margin-top: 32px;
+  position: relative;
 }
 
 .prompt-actions button {
@@ -160,11 +161,13 @@
   border-radius: 100px;
   font-weight: 500;
   transition: var(--transition);
+  position: relative;
 }
 
 .copy-button {
   background-color: var(--primary-color);
   color: white;
+  position: relative;
 }
 
 .copy-button:hover {
@@ -420,4 +423,256 @@ body.dark-mode .search-title {
   background: linear-gradient(90deg, var(--primary-color), #64b5f6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* 模态框样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background-color: var(--background-color);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 400px;
+  overflow: hidden;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  flex: 1;
+}
+
+.close-button {
+  background: none !important;
+  border: none !important;
+  color: var(--text-secondary);
+  cursor: pointer;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  max-width: 24px !important;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  margin-left: 10px !important;
+  padding: 0 !important;
+  flex: 0 0 24px !important;
+}
+
+.close-button i {
+  font-size: 12px;
+}
+
+.close-button:hover {
+  background-color: var(--card-background) !important;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-body p {
+  margin-top: 0;
+  margin-bottom: 14px;
+  font-size: 15px;
+}
+
+.share-link-container {
+  display: flex;
+  margin-bottom: 12px;
+  align-items: stretch;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.share-link {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid var(--border-color);
+  border-right: none;
+  border-radius: var(--radius) 0 0 var(--radius);
+  background-color: var(--card-background);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.copy-link-button {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  border: none !important;
+  padding: 0 !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  height: 36px !important;
+  border-radius: 0 var(--radius) var(--radius) 0 !important;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 36px !important;
+}
+
+.copy-link-button i {
+  font-size: 14px;
+}
+
+.copy-link-button:hover {
+  background-color: var(--highlight-color) !important;
+}
+
+.link-status {
+  font-size: 13px;
+  margin-top: 6px;
+  margin-bottom: 0;
+  animation: fadeIn 0.3s ease;
+  text-align: center;
+  height: 18px;
+}
+
+.link-status.success {
+  color: var(--success-color);
+}
+
+.link-status.error {
+  color: var(--danger-color);
+}
+
+.modal-footer {
+  padding: 14px 20px 20px;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--card-background);
+}
+
+.share-tip {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.social-share {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.social-share-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.social-share-button:hover {
+  transform: translateY(-3px);
+}
+
+.social-share-button.twitter {
+  background-color: #1DA1F2;
+  color: white;
+}
+
+.social-share-button.linkedin {
+  background-color: #0077B5;
+  color: white;
+}
+
+.social-share-button.facebook {
+  background-color: #4267B2;
+  color: white;
+}
+
+/* 复制提示样式 */
+.copy-status {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--card-background);
+  color: var(--text-color);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  animation: fadeIn 0.3s ease;
+  z-index: 10;
+}
+
+.copy-status:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--card-background) transparent transparent transparent;
+}
+
+.copy-status.success {
+  color: var(--success-color);
+}
+
+.copy-status.error {
+  color: var(--danger-color);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
