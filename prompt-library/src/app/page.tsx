@@ -28,8 +28,8 @@ export default function Home() {
       <section className="featured">
         <div className="section-header">
           <h2>精选提示词</h2>
-          <Link href="/prompts" className="view-all">
-            查看全部 <i className="fa-solid fa-chevron-right"></i>
+          <Link href="/prompts/popular" className="view-all">
+            查看热门 <i className="fa-solid fa-chevron-right"></i>
           </Link>
         </div>
         <div className="prompt-grid">

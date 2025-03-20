@@ -37,7 +37,7 @@ export default function Header() {
           <Link href="/categories" className={pathname === '/categories' || pathname === '/PromptLibrary/categories' ? 'active' : ''}>
             分类
           </Link>
-          <Link href="/popular" className={pathname === '/popular' || pathname === '/PromptLibrary/popular' ? 'active' : ''}>
+          <Link href="/prompts/popular" className={pathname === '/prompts/popular' || pathname === '/PromptLibrary/prompts/popular' ? 'active' : ''}>
             热门
           </Link>
           <Link href="/about" className={pathname === '/about' || pathname === '/PromptLibrary/about' ? 'active' : ''}>

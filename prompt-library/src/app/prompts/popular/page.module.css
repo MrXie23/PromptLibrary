@@ -1,0 +1,139 @@
+/* 热门提示词页面样式 */
+.page-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 2rem 0;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+}
+
+.page-description {
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--text-secondary);
+}
+
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: var(--bg-light);
+    border-radius: 0.5rem;
+}
+
+.filter-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.filter-label {
+    font-weight: 500;
+}
+
+.filter-select {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-white);
+    cursor: pointer;
+}
+
+.results-count {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.prompt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem 0;
+    background-color: var(--bg-light);
+    border-radius: 0.5rem;
+    margin-bottom: 3rem;
+}
+
+.empty-icon {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.empty-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+}
+
+.empty-description {
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+}
+
+.view-button {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.view-button:hover {
+    background-color: var(--primary-dark);
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+}
+
+.pagination-link {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--bg-light);
+    border-radius: 0.25rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.pagination-link:hover {
+    background-color: var(--bg-hover);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .filter-bar {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .prompt-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pagination {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

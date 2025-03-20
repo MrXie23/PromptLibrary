@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
 import { PromptData, CategoryData } from '@/types';
+import { CATEGORIES, CATEGORY_TO_SLUG } from '@/config/categories';
 
 const promptsDirectory = path.join(process.cwd(), 'prompts');
 
@@ -72,31 +73,14 @@ export function getAllCategories(): CategoryData[] {
     return acc;
   }, {} as Record<string, number>);
   
-  // 分类数据（这里可以从配置文件或数据库加载）
-  const categories: CategoryData[] = [
-    { slug: 'content-creation', name: '内容创作', icon: 'fa-pen-fancy', count: 0 },
-    { slug: 'programming', name: '编程开发', icon: 'fa-code', count: 0 },
-    { slug: 'creative-design', name: '创意设计', icon: 'fa-palette', count: 0 },
-    { slug: 'data-analysis', name: '数据分析', icon: 'fa-chart-line', count: 0 },
-    { slug: 'marketing', name: '营销推广', icon: 'fa-bullhorn', count: 0 },
-    { slug: 'education', name: '教育学习', icon: 'fa-graduation-cap', count: 0 },
-  ];
+  // 使用配置文件中的分类数据
+  const categories = [...CATEGORIES];
   
   // 更新分类计数
   return categories.map(category => {
-    // 中文分类名与英文slug的映射
-    const categoryMap: Record<string, string> = {
-      '内容创作': 'content-creation',
-      '编程开发': 'programming',
-      '创意设计': 'creative-design',
-      '数据分析': 'data-analysis',
-      '营销推广': 'marketing',
-      '教育学习': 'education',
-    };
-    
     // 查找对应的分类计数
     const count = Object.entries(categoryCounts).reduce((acc, [catName, count]) => {
-      if (categoryMap[catName] === category.slug) {
+      if (CATEGORY_TO_SLUG[catName] === category.slug) {
         return acc + count;
       }
       return acc;
