@@ -119,8 +119,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 订阅区域 */}
-      <Subscribe />
+      {/* 订阅区域
+      <Subscribe /> */}
     </main>
   );
 }
