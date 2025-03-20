@@ -1,64 +1,129 @@
+**English** | [中文](./prompt-library/docs/README.zh-CN.md)
+
 # Prompt Library
 
-> Explore, use, and share carefully curated AI prompts to unlock the full potential of AI.
-
-## 🚀 Project Status
-
-**Note: This is a newly launched project currently in its initial development phase.** The current implementation is a static website built with HTML, CSS, and JavaScript, with plans for enhanced functionality in future updates.
+> Explore, use, and share carefully curated AI prompts to unlock the full potential of artificial intelligence.
 
 ## 📖 About
 
-Prompt Library is a platform designed to help users discover, organize, and share high-quality prompts for various AI models. Our goal is to create a comprehensive collection of prompts categorized by use case, helping everyone from beginners to experts get the most out of their AI interactions.
+Prompt Library is an open-source platform focused on collecting, categorizing, and sharing high-quality AI prompts. Our goal is to create a comprehensive collection of prompts categorized by use case, helping everyone from beginners to experts get the most out of AI models.
 
-### Key Features (Planned)
+## 🚀 Live Demo
 
-- 📋 Browse prompts by categories such as content creation, programming, creative design, and more
-- 🔍 Search functionality to quickly find relevant prompts
+Visit the website: [Prompt Library](https://mrxie23.github.io/PromptLibrary/)
+
+## ✨ Key Features
+
+- 📋 Browse prompts by categories including content creation, programming, design, and more
+- 🔍 Powerful search functionality to quickly find relevant prompts
 - ⭐ Rating system to highlight the most effective prompts
-- 💾 Save favorite prompts for quick access
-- 🔄 Submit and share your own prompts with the community
+- 📱 Responsive design, perfect for all devices
+- 🌐 Multi-language interface with Chinese language support
 
-## 🖥️ Live Demo
+## 🛠️ Tech Stack
 
-Visit the live site: [Prompt Library](https://mrxie23.github.io/PromptLibrary/)
-
-## 🛠️ Technologies
-
-- HTML5
-- CSS3
-- JavaScript (ES6+)
-- GitHub Pages for hosting
+- **Next.js** - React framework providing server-side rendering and static site generation
+- **React** - User interface library
+- **TypeScript** - Type-safe JavaScript superset
+- **MDX** - Markdown extension for content management
+- **CSS Modules** - Component-level style management
 
 ## 📁 Project Structure
 
 ```
 prompt-library/
-├── docs/                 # Website files (GitHub Pages)
-│   ├── index.html        # Main page
-│   ├── styles.css        # Stylesheet
-│   ├── script.js         # JavaScript functionality
-│   └── images/           # Image assets
-├── README.md             # Project documentation
-└── .gitignore            # Git ignore file
+├── src/                  # Source code
+│   ├── app/              # Next.js app pages
+│   ├── components/       # React components
+│   ├── lib/              # Utility functions and helper libraries
+│   └── types/            # TypeScript type definitions
+├── prompts/              # Prompt content (Markdown + JSON)
+├── public/               # Static assets
+├── scripts/              # Build scripts
+└── next.config.js        # Next.js configuration
 ```
 
-## 🔮 Roadmap
+## 🔧 Local Development
 
-- [ ] Complete the static website design
-- [ ] Add responsive design for mobile devices
-- [ ] Implement search functionality
-- [ ] Create detailed prompt view pages
-- [ ] Add user authentication
-- [ ] Develop prompt submission system
-- [ ] Create rating and review system
-- [ ] Build user profiles and saved prompts
+### Prerequisites
+
+- Node.js 16.0.0 or higher
+- npm or yarn package manager
+
+### Installation Steps
+
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/mrxie23/PromptLibrary.git
+   cd prompt-library
+   ```
+
+2. Install dependencies
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Start the development server
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. Open your browser and visit `http://localhost:3000`
+
+## 🏗️ Building and Deployment
+
+```bash
+# Generate production build
+npm run build
+
+# Preview production build locally
+npm run start
+```
+
+## 📝 Adding New Prompts
+
+1. Create a new Markdown file in the `prompts/` directory
+2. Add frontmatter metadata:
+   ```md
+   ---
+   title: Prompt Title
+   description: Brief description
+   category: Category Name
+   ---
+   ```
+3. Write the prompt content
+4. Create a JSON file with the same name, containing additional information:
+   ```json
+   {
+     "slug": "prompt-slug",
+     "rating": 9.5,
+     "createdAt": "YYYY-MM-DD",
+     "featured": false,
+     "isNew": true
+   }
+   ```
 
 ## 🤝 Contributing
 
-As this project is in its early stages, contributions are very welcome! Here's how you can help:
+We welcome contributions of all kinds!
 
-1. **Design Feedback**: Share your thoughts on the current UI/UX
-2. **Feature Suggestions**: Have ideas for features? Open an issue!
-3. **Code Contributions**: Fork the repository and submit pull requests
-4. **Content Creation**: Help curate high-quality prompts for different categories
+1. Fork and clone the project
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add an amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Submit a Pull Request
 
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## 🙏 Acknowledgements
+
+Thanks to all the developers and community members who have contributed to this project!
