@@ -1,20 +1,26 @@
 import { useLanguage } from '../context/LanguageContext';
 import { useEffect, useState } from 'react';
 
+// 定义更灵活的类型
+type TranslationValue = string | Record<string, any>;
+type TranslationsType = Record<string, Record<string, any>>;
+type LoadedStateType = Record<string, Record<string, boolean>>;
+type LoadingPromisesType = Record<string, Record<string, Promise<any> | undefined>>;
+
 // 用于存储翻译字符串的缓存
-const translations: Record<string, Record<string, any>> = {
+const translations: TranslationsType = {
   zh: {},
   en: {}
 };
 
 // 标记已加载的翻译
-const loadedTranslations: Record<string, Record<string, boolean>> = {
+const loadedTranslations: LoadedStateType = {
   zh: {},
   en: {}
 };
 
 // 翻译加载状态
-const loadingPromises: Record<string, Record<string, Promise<any>>> = {
+const loadingPromises: LoadingPromisesType = {
   zh: {},
   en: {}
 };
@@ -22,12 +28,13 @@ const loadingPromises: Record<string, Record<string, Promise<any>>> = {
 // 预加载翻译
 export const loadTranslation = async (locale: string, namespace: string = 'common') => {
   // 如果正在加载这个翻译，返回已有的Promise
-  if (loadingPromises[locale] && loadingPromises[locale][namespace]) {
-    return loadingPromises[locale][namespace];
+  const currentPromise = loadingPromises[locale]?.[namespace];
+  if (currentPromise !== undefined) {
+    return currentPromise;
   }
 
   // 如果这个翻译已经加载过并且有内容，直接返回
-  if (loadedTranslations[locale]?.[namespace] && 
+  if (loadedTranslations[locale]?.[namespace] === true && 
       translations[locale]?.[namespace] && 
       Object.keys(translations[locale][namespace]).length > 0) {
     return translations[locale][namespace];
@@ -70,7 +77,7 @@ export const loadTranslation = async (locale: string, namespace: string = 'commo
     } catch (error) {
       console.error(`Failed to load translation for ${locale}/${namespace}`, error);
       // 清除加载状态，以便下次可以重试
-      delete loadingPromises[locale][namespace];
+      loadingPromises[locale][namespace] = undefined;
       throw error;
     }
   })();
@@ -82,18 +89,21 @@ export const loadTranslation = async (locale: string, namespace: string = 'commo
     return await loadPromise;
   } finally {
     // 完成后清除Promise引用
-    delete loadingPromises[locale][namespace];
+    loadingPromises[locale][namespace] = undefined;
   }
 };
 
 // 强制重新加载翻译
 export const reloadTranslation = async (locale: string, namespace: string = 'common') => {
-  if (loadedTranslations[locale]?.[namespace]) {
+  if (loadedTranslations[locale]?.[namespace] === true) {
     loadedTranslations[locale][namespace] = false;
   }
-  if (loadingPromises[locale]?.[namespace]) {
-    delete loadingPromises[locale][namespace];
+  
+  // 重置加载Promise
+  if (loadingPromises[locale]) {
+    loadingPromises[locale][namespace] = undefined;
   }
+  
   return loadTranslation(locale, namespace);
 };
 
@@ -121,7 +131,10 @@ export const useTranslation = (namespace: string = 'common') => {
     if (!translations[locale] || 
         !translations[locale][namespace] || 
         isChangingLanguage) {
-      if (loadingPromises[locale] && !loadingPromises[locale][namespace]) {
+      
+      // 检查是否已经有一个加载中的Promise
+      const currentPromise = loadingPromises[locale]?.[namespace];
+      if (!currentPromise) {
         // 异步加载翻译
         setTimeout(() => loadTranslation(locale, namespace), 0);
       }
@@ -130,7 +143,7 @@ export const useTranslation = (namespace: string = 'common') => {
 
     // 处理嵌套键，如 'nav.home'
     const keys = key.split('.');
-    let value = translations[locale][namespace];
+    let value: any = translations[locale][namespace];
     
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
@@ -148,9 +161,9 @@ export const useTranslation = (namespace: string = 'common') => {
     // 处理插值参数
     if (params) {
       return Object.entries(params).reduce(
-        (str, [paramKey, paramValue]) => 
+        (str: string, [paramKey, paramValue]) => 
           str.replace(new RegExp(`{{${paramKey}}}`, 'g'), paramValue),
-        value
+        value as string
       );
     }
 
