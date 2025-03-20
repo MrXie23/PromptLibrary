@@ -19,6 +19,7 @@ Prompt Library 是一个专注于收集、分类和分享高质量 AI 提示词�
 - ⭐ 评分系统，突出显示最有效的提示词
 - 📱 响应式设计，完美支持各种设备
 - 🌐 支持中文界面，优化本地化体验
+- 🔧 集成 Prompt Manager，轻松管理提示词内容
 
 ## 🛠️ 技术栈
 
@@ -27,6 +28,7 @@ Prompt Library 是一个专注于收集、分类和分享高质量 AI 提示词�
 - **TypeScript** - 类型安全的 JavaScript 超集
 - **MDX** - 用于内容管理的 Markdown 扩展
 - **CSS Modules** - 组件级样式管理
+- **Tailwind CSS** - 用于 Prompt Manager 的实用优先 CSS 框架
 
 ## 📁 项目结构
 
@@ -41,6 +43,15 @@ prompt-library/
 ├── public/               # 静态资源
 ├── scripts/              # 构建脚本
 └── next.config.js        # Next.js配置
+
+prompt-manager/           # 提示词内容管理工具
+├── src/                  # 源代码
+│   ├── components/       # UI组件
+│   ├── lib/              # 工具函数
+│   ├── pages/            # 应用页面和API路由
+│   ├── styles/           # CSS样式
+│   └── types/            # TypeScript类型定义
+└── public/               # 静态资源
 ```
 
 ## 🔧 本地开发
@@ -89,6 +100,8 @@ npm run start
 
 ## 📝 添加新提示词
 
+### 方法一：手动添加文件
+
 1. 在 `prompts/` 目录中创建新的 Markdown 文件
 2. 添加前置元数据 (frontmatter)：
    ```md
@@ -109,6 +122,65 @@ npm run start
      "isNew": true
    }
    ```
+
+### 方法二：使用 Prompt Manager
+
+Prompt Manager 是一个基于网页的工具，旨在通过直观的界面帮助您管理提示词库。它提供了一种用户友好的方式来创建、编辑和组织您的提示词。
+
+#### 启动 Prompt Manager
+
+1. 进入 prompt-manager 目录：
+
+   ```bash
+   cd prompt-manager
+   ```
+
+2. 安装依赖（仅首次使用）：
+
+   ```bash
+   npm install
+   ```
+
+3. 启动 Prompt Manager：
+
+   ```bash
+   npm run dev
+   # 或在Windows上使用 start.bat 文件
+   ```
+
+4. 打开浏览器访问 `http://localhost:3000`
+
+#### Prompt Manager 主要功能
+
+- **仪表盘**：查看提示词库的统计信息和关键数据
+- **浏览**：列出所有提示词，支持搜索、筛选和排序
+- **创建**：使用可视化编辑器和模板选项添加新提示词
+- **编辑**：修改现有提示词的内容和属性
+- **分类管理**：管理提示词分类
+- **预览**：在保存前查看提示词的显示效果
+
+#### 创建新提示词
+
+1. 点击仪表盘或导航菜单中的"创建新提示"按钮
+2. 填写必填字段：
+   - 标题
+   - 描述
+   - 分类
+   - 内容（支持 Markdown 格式）
+3. 可选自定义：
+   - 文件名（或让系统自动生成）
+   - 评分（1-10）
+   - 精选状态
+   - 新提示标记
+4. 点击"创建提示"保存
+
+#### 编辑现有提示词
+
+1. 导航到提示词列表页面
+2. 找到要编辑的提示词并点击
+3. 点击"编辑"按钮
+4. 对内容或属性进行修改
+5. 点击"保存更改"更新提示词
 
 ## 🤝 贡献指南
 

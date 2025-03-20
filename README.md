@@ -19,6 +19,7 @@ Visit the website: [Prompt Library](https://mrxie23.github.io/PromptLibrary/)
 - ⭐ Rating system to highlight the most effective prompts
 - 📱 Responsive design, perfect for all devices
 - 🌐 Multi-language interface with Chinese language support
+- 🔧 Integrated Prompt Manager for easy content management
 
 ## 🛠️ Tech Stack
 
@@ -27,6 +28,7 @@ Visit the website: [Prompt Library](https://mrxie23.github.io/PromptLibrary/)
 - **TypeScript** - Type-safe JavaScript superset
 - **MDX** - Markdown extension for content management
 - **CSS Modules** - Component-level style management
+- **Tailwind CSS** - Utility-first CSS framework used for Prompt Manager
 
 ## 📁 Project Structure
 
@@ -41,6 +43,15 @@ prompt-library/
 ├── public/               # Static assets
 ├── scripts/              # Build scripts
 └── next.config.js        # Next.js configuration
+
+prompt-manager/           # Management tool for prompt content
+├── src/                  # Source code
+│   ├── components/       # UI components
+│   ├── lib/              # Utility functions
+│   ├── pages/            # App pages & API routes
+│   ├── styles/           # CSS styles
+│   └── types/            # TypeScript type definitions
+└── public/               # Static assets
 ```
 
 ## 🔧 Local Development
@@ -89,6 +100,8 @@ npm run start
 
 ## 📝 Adding New Prompts
 
+### Method 1: Manually Adding Files
+
 1. Create a new Markdown file in the `prompts/` directory
 2. Add frontmatter metadata:
    ```md
@@ -109,6 +122,65 @@ npm run start
      "isNew": true
    }
    ```
+
+### Method 2: Using Prompt Manager
+
+The Prompt Manager is a web-based tool designed to help you manage your prompt library with an intuitive interface. It provides a user-friendly way to create, edit, and organize your prompts.
+
+#### Starting Prompt Manager
+
+1. Navigate to the prompt-manager directory:
+
+   ```bash
+   cd prompt-manager
+   ```
+
+2. Install dependencies (first time only):
+
+   ```bash
+   npm install
+   ```
+
+3. Start the Prompt Manager:
+
+   ```bash
+   npm run dev
+   # or use the start.bat file on Windows
+   ```
+
+4. Open your browser and visit `http://localhost:3000`
+
+#### Key Features of Prompt Manager
+
+- **Dashboard**: View statistics and key information about your prompt library
+- **Browse**: List all prompts with search, filter, and sort functionality
+- **Create**: Add new prompts with a visual editor and template options
+- **Edit**: Modify existing prompt content and properties
+- **Categories**: Manage prompt categories
+- **Preview**: See how your prompts will look before saving
+
+#### Creating a New Prompt
+
+1. Click on the "Create New Prompt" button in the dashboard or navigation menu
+2. Fill in the required fields:
+   - Title
+   - Description
+   - Category
+   - Content (supports Markdown format)
+3. Optionally customize:
+   - File name (or let the system generate one)
+   - Rating (1-10)
+   - Featured status
+   - New status
+4. Click "Create Prompt" to save
+
+#### Editing an Existing Prompt
+
+1. Navigate to the prompt list page
+2. Find the prompt you want to edit and click on it
+3. Click the "Edit" button
+4. Make your changes to the content or properties
+5. Click "Save Changes" to update the prompt
 
 ## 🤝 Contributing
 
