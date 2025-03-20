@@ -63,7 +63,7 @@ export default function Footer() {
             <div className="footer-links-items">
               <Link href="/">{t('nav.home')}</Link>
               <Link href="/categories">{t('nav.categories')}</Link>
-              <Link href="/popular">{t('nav.popular')}</Link>
+              <Link href="/prompts/popular">{t('nav.popular')}</Link>
               <Link href="/about">{t('nav.about')}</Link>
             </div>
           </div>

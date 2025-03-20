@@ -298,6 +298,45 @@ nav {
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
+  background-color: var(--primary-color);
+  color: white;
+  z-index: 2;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  /* 防止文字换行 */
+}
+
+/* 当同时有new和featured标签时，创建一个组合标签 */
+.prompt-card .prompt-label.combined {
+  background: none;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.prompt-card .prompt-label.combined span {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.prompt-card .prompt-label.combined .new-part {
+  background-color: var(--success-color);
+  color: white;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.prompt-card .prompt-label.combined .featured-part {
+  background-color: var(--primary-color);
+  color: white;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .prompt-label.new {
@@ -309,6 +348,11 @@ nav {
   font-size: 20px;
   margin-bottom: 12px;
   font-weight: 600;
+  margin-top: 8px;
+  line-height: 1.4;
+  padding-right: 90px;
+  /* 保持右侧内边距，适应标签 */
+  transition: padding-right 0.2s ease;
 }
 
 .prompt-card p {
@@ -782,6 +826,21 @@ footer {
   .footer-links-section a:active,
   .nav-links a:active {
     opacity: 0.7;
+  }
+
+  .prompt-card h3 {
+    font-size: 18px;
+    padding-right: 85px;
+    /* 保持右侧内边距 */
+  }
+
+  .prompt-label {
+    font-size: 10px;
+  }
+
+  .prompt-card .prompt-label.combined span {
+    padding: 3px 6px;
+    font-size: 10px;
   }
 }
 

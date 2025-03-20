@@ -33,10 +33,29 @@ export default function PromptCard({ prompt, featured = false, isNew = false }: 
   const categoryKey = getCategoryTranslationKey(prompt.category);
   const categoryName = categoryKey ? t(categoryKey) : prompt.category;
 
+  // 渲染标签
+  const renderLabels = () => {
+    if (featured && isNew) {
+      // 如果同时是 featured 和 new，显示组合标签
+      return (
+        <div className="prompt-label combined">
+          <span className="new-part">{t('prompt_card.new')}</span>
+          <span className="featured-part">{t('prompt_card.featured')}</span>
+        </div>
+      );
+    } else if (featured) {
+      // 只有 featured
+      return <div className="prompt-label">{t('prompt_card.featured')}</div>;
+    } else if (isNew) {
+      // 只有 new
+      return <div className="prompt-label new">{t('prompt_card.new')}</div>;
+    }
+    return null;
+  };
+
   return (
     <div className={`prompt-card ${featured ? 'featured' : ''}`}>
-      {featured && <div className="prompt-label">{t('prompt_card.featured')}</div>}
-      {isNew && <div className="prompt-label new">{t('prompt_card.new')}</div>}
+      {renderLabels()}
       <h3>{prompt.title}</h3>
       <p>{prompt.description}</p>
       <div className="prompt-meta">

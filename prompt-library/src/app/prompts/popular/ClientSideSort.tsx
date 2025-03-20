@@ -78,6 +78,7 @@ export default function ClientSideSort({ prompts }: ClientSideSortProps) {
                             key={prompt.slug}
                             prompt={prompt}
                             featured={index < 3} // 前三个标记为热门
+                            isNew={prompt.isNew}
                         />
                     ))}
                 </div>
