@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
-          cache-dependency-path: prompt-library2/package-lock.json
+          cache-dependency-path: prompt-library/package-lock.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -36,21 +36,21 @@ jobs:
           static_site_generator: next
 
       - name: Install dependencies
-        run: cd prompt-library2 && npm ci
+        run: cd prompt-library && npm ci
 
       - name: Create .nojekyll file
-        run: touch prompt-library2/public/.nojekyll
+        run: touch prompt-library/public/.nojekyll
 
       - name: Generate index
-        run: cd prompt-library2 && node scripts/generate-index.js
+        run: cd prompt-library && node scripts/generate-index.js
 
       - name: Build
-        run: cd prompt-library2 && npm run build
+        run: cd prompt-library && npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./prompt-library2/out
+          path: ./prompt-library/out
 
   deploy:
     environment:
