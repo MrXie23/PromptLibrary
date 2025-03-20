@@ -6,6 +6,8 @@ import { usePathname, useRouter } from 'next/navigation';
 
 export default function Header() {
   const [darkMode, setDarkMode] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -13,6 +15,20 @@ export default function Header() {
     // 检查用户系统偏好
     const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     setDarkMode(prefersDarkMode);
+
+    // 检测是否为移动设备
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    // 初始检查
+    checkIfMobile();
+
+    // 添加窗口大小变化监听
+    window.addEventListener('resize', checkIfMobile);
+
+    // 清除监听器
+    return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
 
   const toggleTheme = () => {
@@ -20,8 +36,27 @@ export default function Header() {
     document.body.classList.toggle('dark-mode');
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+    // 禁止/允许背景滚动
+    if (!mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  };
+
   const handleSearchClick = () => {
     router.push('/search');
+    if (mobileMenuOpen) {
+      toggleMobileMenu();
+    }
+  };
+
+  const handleNavLinkClick = () => {
+    if (mobileMenuOpen) {
+      toggleMobileMenu();
+    }
   };
 
   return (
@@ -30,17 +65,33 @@ export default function Header() {
         <Link href="/" className="logo">
           Prompt<span>Library</span>
         </Link>
-        <div className="nav-links">
-          <Link href="/" className={pathname === '/' || pathname === '/PromptLibrary/' ? 'active' : ''}>
+        <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
+          <Link
+            href="/"
+            className={pathname === '/' || pathname === '/PromptLibrary/' ? 'active' : ''}
+            onClick={handleNavLinkClick}
+          >
             首页
           </Link>
-          <Link href="/categories" className={pathname === '/categories' || pathname === '/PromptLibrary/categories' ? 'active' : ''}>
+          <Link
+            href="/categories"
+            className={pathname === '/categories' || pathname === '/PromptLibrary/categories' ? 'active' : ''}
+            onClick={handleNavLinkClick}
+          >
             分类
           </Link>
-          <Link href="/prompts/popular" className={pathname === '/prompts/popular' || pathname === '/PromptLibrary/prompts/popular' ? 'active' : ''}>
+          <Link
+            href="/prompts/popular"
+            className={pathname === '/prompts/popular' || pathname === '/PromptLibrary/prompts/popular' ? 'active' : ''}
+            onClick={handleNavLinkClick}
+          >
             热门
           </Link>
-          <Link href="/about" className={pathname === '/about' || pathname === '/PromptLibrary/about' ? 'active' : ''}>
+          <Link
+            href="/about"
+            className={pathname === '/about' || pathname === '/PromptLibrary/about' ? 'active' : ''}
+            onClick={handleNavLinkClick}
+          >
             关于
           </Link>
         </div>
@@ -51,6 +102,11 @@ export default function Header() {
           <button className="theme-toggle" onClick={toggleTheme}>
             <i className={`fa-solid ${darkMode ? 'fa-sun' : 'fa-moon'}`}></i>
           </button>
+          {isMobile && (
+            <button className="mobile-menu-toggle" onClick={toggleMobileMenu}>
+              <i className={`fa-solid ${mobileMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
+            </button>
+          )}
         </div>
       </nav>
     </header>

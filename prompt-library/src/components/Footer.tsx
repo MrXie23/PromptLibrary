@@ -4,43 +4,49 @@ import Link from 'next/link';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  
+
   return (
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-logo">
           Prompt<span>Library</span>
         </div>
-        
+
         <div className="footer-links">
           <div className="footer-links-section">
             <h4>导航</h4>
-            <Link href="/">首页</Link>
-            <Link href="/categories">分类</Link>
-            <Link href="/popular">热门</Link>
-            <Link href="/about">关于</Link>
+            <div className="footer-links-items">
+              <Link href="/">首页</Link>
+              <Link href="/categories">分类</Link>
+              <Link href="/popular">热门</Link>
+              <Link href="/about">关于</Link>
+            </div>
           </div>
-          
+
           <div className="footer-links-section">
             <h4>资源</h4>
-            <Link href="/submit">提交提示词</Link>
-            <Link href="/guidelines">使用指南</Link>
-            <Link href="/faq">常见问题</Link>
+            <div className="footer-links-items">
+              <a href="https://github.com/MrXie23/PromptLibrary" target="_blank" rel="noopener noreferrer">GitHub 仓库</a>
+              <a href="https://github.com/MrXie23/PromptLibrary/issues" target="_blank" rel="noopener noreferrer">问题反馈</a>
+              <a href="https://github.com/MrXie23/PromptLibrary/blob/main/README.md" target="_blank" rel="noopener noreferrer">文档</a>
+            </div>
           </div>
-          
+
           <div className="footer-links-section">
             <h4>法律</h4>
-            <Link href="/terms">使用条款</Link>
-            <Link href="/privacy">隐私政策</Link>
-            <Link href="/cookies">Cookie 政策</Link>
+            <div className="footer-links-items">
+              <Link href="/terms">使用条款</Link>
+              <Link href="/privacy">隐私政策</Link>
+              <Link href="/cookies">Cookie 政策</Link>
+            </div>
           </div>
         </div>
-        
+
         <div className="footer-social">
           <a href="https://twitter.com/promptlibrary" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
             <i className="fa-brands fa-twitter"></i>
           </a>
-          <a href="https://github.com/promptlibrary" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <a href="https://github.com/MrXie23/PromptLibrary" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <i className="fa-brands fa-github"></i>
           </a>
           <a href="https://discord.gg/promptlibrary" target="_blank" rel="noopener noreferrer" aria-label="Discord">
@@ -48,7 +54,7 @@ export default function Footer() {
           </a>
         </div>
       </div>
-      
+
       <div className="footer-bottom">
         <p>© {currentYear} PromptLibrary. 保留所有权利。</p>
       </div>

@@ -35,9 +35,14 @@ body {
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  /* 让container填充可用空间 */
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  overflow-x: hidden;
 }
 
 h1,
@@ -78,6 +83,21 @@ input:focus {
 
 section {
   margin: 80px 0;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* 确保其他主要内容元素也有正确的最大宽度 */
+.section-header,
+.prompt-grid,
+.category-container,
+.subscribe {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 /* 导航栏样式 */
@@ -88,6 +108,7 @@ header {
   background-color: rgba(255, 255, 255, 0.8);
   z-index: 100;
   border-bottom: 1px solid var(--border-color);
+  width: 100%;
 }
 
 nav {
@@ -95,6 +116,11 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 16px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .logo {
@@ -487,12 +513,13 @@ footer {
 
 .footer-bottom {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid var(--border-color);
+  margin: 2rem auto 0;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #718096;
+  border-top: 1px solid #e9ecef;
+  width: calc(100% - 4rem);
 }
 
 .footer-bottom p {
@@ -545,6 +572,11 @@ footer {
 
 /* 响应式设计 */
 @media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+    padding: 0;
+  }
+
   .hero h1 {
     font-size: 36px;
   }
@@ -584,9 +616,172 @@ footer {
   }
 
   .footer-bottom {
+    margin-top: 1rem;
+    padding: 1rem 1rem;
+    font-size: 0.8rem;
+    width: calc(100% - 2rem);
+  }
+
+  .container {
+    padding: 0;
+  }
+
+  main,
+  .search-content-container,
+  .container>div:not(.footer):not(header) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .prompt-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .section-header {
+    margin: 2rem 0 1rem;
     flex-direction: column;
-    gap: 16px;
-    text-align: center;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+
+  header {
+    padding: 0;
+  }
+
+  nav {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 2rem;
+  }
+
+  body.dark-mode .nav-links {
+    background-color: #121212;
+  }
+
+  .nav-links.mobile-open {
+    transform: translateX(0);
+  }
+
+  .nav-links a {
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+    z-index: 1001;
+  }
+
+  /* 内容区域优化 */
+  section,
+  .section-header,
+  .prompt-grid,
+  .category-container,
+  .subscribe {
+    max-width: 100%;
+  }
+
+  section {
+    margin: 1.5rem 0;
+    padding: 0;
+  }
+
+  .hero {
+    padding: 2rem 1rem;
+  }
+
+  .hero h1 {
+    font-size: 1.75rem;
+    line-height: 1.3;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-container {
+    width: 100%;
+    max-width: none;
+    margin: 1rem 0;
+  }
+
+  .search-container input {
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .subscribe {
+    padding: 2rem 1rem;
+  }
+
+  .subscribe-content {
+    padding: 0;
+  }
+
+  .subscribe h2 {
+    font-size: 1.5rem;
+  }
+
+  .subscribe p {
+    font-size: 1rem;
+  }
+
+  .subscribe-form {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .subscribe-form input {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .subscribe-form button {
+    width: 100%;
+  }
+
+  /* 固定底部间距，避免被iOS底部导航栏遮挡 */
+  .footer {
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
+  }
+
+  /* 添加触摸反馈 */
+  .footer-links-section a,
+  .nav-links a {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-links-section a:active,
+  .nav-links a:active {
+    opacity: 0.7;
   }
 }
 
@@ -628,6 +823,7 @@ main,
   margin-top: auto;
   /* 将footer推到底部 */
   border-top: 1px solid #e9ecef;
+  width: 100%;
 }
 
 /* 深色模式 */
@@ -645,6 +841,7 @@ body.dark-mode .footer {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 2rem;
+  width: calc(100% - 4rem);
 }
 
 .footer-logo {
@@ -669,6 +866,11 @@ body.dark-mode .footer-logo span {
 }
 
 .footer-links-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-links-items {
   display: flex;
   flex-direction: column;
 }
@@ -733,11 +935,98 @@ body.dark-mode .footer-bottom {
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
+    padding: 0 1.5rem;
+    width: calc(100% - 3rem);
   }
 
   .footer-links {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
+    width: 100%;
   }
+
+  .footer-links-section {
+    width: 100%;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  body.dark-mode .footer-links-section {
+    border-bottom: 1px solid #333;
+  }
+
+  .footer-links-section:last-child {
+    border-bottom: none;
+  }
+
+  .footer-links-section h4 {
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-social {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1.5rem;
+    gap: 2rem;
+  }
+
+  .footer-social a {
+    font-size: 1.5rem;
+  }
+
+  .footer-bottom {
+    margin-top: 1rem;
+    padding: 1rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .footer {
+    padding: 2rem 0 0.5rem;
+  }
+
+  .footer-links-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-links-section h4 {
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* 适配极小屏幕设备 */
+@media (max-width: 320px) {
+  .footer-content {
+    padding: 0 1rem;
+  }
+
+  .footer-links-section h4 {
+    font-size: 0.9rem;
+  }
+
+  .footer-links-section a {
+    font-size: 0.85rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.75rem;
+  }
+}
+
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #333;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+body.dark-mode .mobile-menu-toggle {
+  color: #f8f9fa;
 }
