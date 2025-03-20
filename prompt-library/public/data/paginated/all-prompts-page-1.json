@@ -1,0 +1,92 @@
+[
+  {
+    "slug": "email-marketing-campaign",
+    "title": "电子邮件营销活动策划",
+    "description": "设计完整的电子邮件营销活动，包括目标设定、分段策略、邮件序列设计和性能预测。",
+    "category": "营销推广",
+    "rating": 9,
+    "createdAt": "2025-02-18",
+    "featured": false,
+    "isNew": true
+  },
+  {
+    "slug": "social-media-content-calendar",
+    "title": "社交媒体内容日历生成器",
+    "description": "根据营销目标和受众特征，创建结构化的社交媒体内容日历，包括帖子类型、主题和发布时间。",
+    "category": "营销推广",
+    "rating": 8.9,
+    "createdAt": "2025-02-12",
+    "featured": false,
+    "isNew": true
+  },
+  {
+    "slug": "ui-design-system-creator",
+    "title": "UI设计系统创建器",
+    "description": "构建完整的用户界面设计系统，包括组件规范、色彩系统、排版规则和交互模式。",
+    "category": "创意设计",
+    "rating": 9.6,
+    "createdAt": "2025-02-12",
+    "featured": true,
+    "isNew": true
+  },
+  {
+    "slug": "learning-plan-generator",
+    "title": "学习计划生成器",
+    "description": "为任何主题或技能创建个性化的、结构化的学习路径，包含里程碑、资源和时间表。",
+    "category": "教育学习",
+    "rating": 9.6,
+    "createdAt": "2025-02-10",
+    "featured": true,
+    "isNew": true
+  },
+  {
+    "slug": "website-design-consultant",
+    "title": "网站设计顾问",
+    "description": "根据业务需求和目标受众提供详细的网站设计建议，包括布局、色彩方案和用户体验优化。",
+    "category": "创意设计",
+    "rating": 9.5,
+    "createdAt": "2025-02-08",
+    "featured": true,
+    "isNew": true
+  },
+  {
+    "slug": "blog-content-planner",
+    "title": "博客内容规划师",
+    "description": "生成全面的博客内容计划，包括标题创意、关键词建议和主题大纲。",
+    "category": "内容创作",
+    "rating": 9.4,
+    "createdAt": "2025-02-05",
+    "featured": false,
+    "isNew": true
+  },
+  {
+    "slug": "digital-marketing-strategy",
+    "title": "数字营销策略规划",
+    "description": "根据业务目标和目标受众创建全面的数字营销策略，包括渠道选择、内容计划和KPI设定。",
+    "category": "营销推广",
+    "rating": 9.2,
+    "createdAt": "2025-02-05",
+    "featured": true,
+    "isNew": false
+  },
+  {
+    "slug": "logo-design-brief",
+    "title": "Logo设计指南",
+    "description": "根据品牌价值观和目标受众创建详细的Logo设计方案，包括风格、颜色、字体和应用场景建议。",
+    "category": "创意设计",
+    "rating": 9.4,
+    "createdAt": "2025-02-05",
+    "featured": false,
+    "isNew": true
+  },
+  {
+    "slug": "predictive-modeling-assistant",
+    "title": "预测建模助手",
+    "description": "帮助构建和优化预测模型，提供特征选择、模型选择、评估及调优的专业指导。",
+    "category": "数据分析",
+    "rating": 9.4,
+    "createdAt": "2025-02-03",
+    "featured": false,
+    "isNew": true
+  }
+]

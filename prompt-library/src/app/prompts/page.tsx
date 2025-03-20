@@ -1,8 +1,10 @@
 import { Metadata } from 'next';
 import { getAllPrompts } from '@/lib/prompts';
-import PromptCard from '@/components/PromptCard';
-import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { PromptData } from '@/types';
+
+// 动态导入客户端组件，避免服务器端渲染错误
+const PaginatedPrompts = dynamic(() => import('@/components/PaginatedPrompts'), { ssr: false });
 
 export const metadata: Metadata = {
   title: '所有提示词 - Prompt Library',
@@ -32,19 +34,25 @@ const fallbackPrompts: PromptData[] = [
 ];
 
 export default function PromptsPage() {
-  // 获取所有提示词（带错误处理）
-  let allPrompts: PromptData[] = [];
+  // 获取所有提示词作为初始数据（带错误处理）
+  // 注意：在静态构建时，这些数据会用于生成静态HTML
+  // 在客户端，PaginatedPrompts组件会加载对应页面的JSON数据
+  let initialPrompts: PromptData[] = [];
   try {
-    allPrompts = getAllPrompts();
+    initialPrompts = getAllPrompts();
     // 如果没有获取到任何提示词，使用备用数据
-    if (allPrompts.length === 0) {
-      allPrompts = fallbackPrompts;
+    if (initialPrompts.length === 0) {
+      initialPrompts = fallbackPrompts;
     }
   } catch (error) {
     console.error('获取提示词数据时出错:', error);
     // 错误处理 - 使用备用数据
-    allPrompts = fallbackPrompts;
+    initialPrompts = fallbackPrompts;
   }
+
+  // 只传递第一页数据作为初始数据
+  const initialPageData = initialPrompts.slice(0, 9);
+  const totalPages = Math.ceil(initialPrompts.length / 9);
 
   return (
     <main>
@@ -54,16 +62,15 @@ export default function PromptsPage() {
       </section>
 
       <section className="prompts-list">
-        <div className="prompt-grid">
-          {allPrompts.map(prompt => (
-            <PromptCard
-              key={prompt.slug}
-              prompt={prompt}
-              featured={prompt.featured}
-              isNew={prompt.isNew}
-            />
-          ))}
-        </div>
+        <PaginatedPrompts
+          type="all"
+          initialData={initialPageData}
+          initialMeta={{
+            total: initialPrompts.length,
+            perPage: 9,
+            totalPages: totalPages
+          }}
+        />
       </section>
     </main>
   );

@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "ui-design-system-creator",
+    "title": "UI设计系统创建器",
+    "description": "构建完整的用户界面设计系统，包括组件规范、色彩系统、排版规则和交互模式。",
+    "category": "创意设计",
+    "rating": 9.6,
+    "createdAt": "2025-02-12",
+    "featured": true,
+    "isNew": true
+  },
+  {
+    "slug": "website-design-consultant",
+    "title": "网站设计顾问",
+    "description": "根据业务需求和目标受众提供详细的网站设计建议，包括布局、色彩方案和用户体验优化。",
+    "category": "创意设计",
+    "rating": 9.5,
+    "createdAt": "2025-02-08",
+    "featured": true,
+    "isNew": true
+  },
+  {
+    "slug": "logo-design-brief",
+    "title": "Logo设计指南",
+    "description": "根据品牌价值观和目标受众创建详细的Logo设计方案，包括风格、颜色、字体和应用场景建议。",
+    "category": "创意设计",
+    "rating": 9.4,
+    "createdAt": "2025-02-05",
+    "featured": false,
+    "isNew": true
+  }
+]

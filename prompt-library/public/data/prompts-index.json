@@ -1,11 +1,83 @@
 [
   {
+    "slug": "api-documentation-generator",
+    "title": "API文档生成器",
+    "description": "根据API代码或规范生成专业、完整的API文档，包括端点说明、参数详解和使用示例。",
+    "category": "编程开发",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.834Z"
+  },
+  {
+    "slug": "blog-content-planner",
+    "title": "博客内容规划师",
+    "description": "生成全面的博客内容计划，包括标题创意、关键词建议和主题大纲。",
+    "category": "内容创作",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.836Z"
+  },
+  {
     "slug": "code-optimization-assistant",
     "title": "代码优化助手",
     "description": "分析并优化您的代码，提供性能改进建议和最佳实践指导。",
     "category": "编程开发",
     "tags": [],
-    "date": "2025-03-20T02:57:31.819Z"
+    "date": "2025-03-20T03:53:01.837Z"
+  },
+  {
+    "slug": "code-refactoring-guide",
+    "title": "代码重构指南",
+    "description": "分析现有代码并提供详细的重构建议，改进代码结构、可读性和可维护性。",
+    "category": "编程开发",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.837Z"
+  },
+  {
+    "slug": "concept-explainer",
+    "title": "概念解释专家",
+    "description": "将复杂概念分解成简单易懂的解释，使用类比、例子和视觉描述帮助理解。",
+    "category": "教育学习",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.837Z"
+  },
+  {
+    "slug": "data-analysis-plan",
+    "title": "数据分析计划生成器",
+    "description": "根据具体业务问题和可用数据创建完整的数据分析计划，包括方法选择、工具建议和预期结果。",
+    "category": "数据分析",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.837Z"
+  },
+  {
+    "slug": "data-visualization-guide",
+    "title": "数据可视化指南",
+    "description": "基于具体数据和目标提供最佳数据可视化建议，包括图表类型选择、设计原则和工具建议。",
+    "category": "数据分析",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.838Z"
+  },
+  {
+    "slug": "digital-marketing-strategy",
+    "title": "数字营销策略规划",
+    "description": "根据业务目标和目标受众创建全面的数字营销策略，包括渠道选择、内容计划和KPI设定。",
+    "category": "营销推广",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.838Z"
+  },
+  {
+    "slug": "email-marketing-campaign",
+    "title": "电子邮件营销活动策划",
+    "description": "设计完整的电子邮件营销活动，包括目标设定、分段策略、邮件序列设计和性能预测。",
+    "category": "营销推广",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.838Z"
+  },
+  {
+    "slug": "exam-question-generator",
+    "title": "考试题目生成器",
+    "description": "根据指定主题和难度生成各种类型的考试题目，包括选择题、填空题和论述题。",
+    "category": "教育学习",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.839Z"
   },
   {
     "slug": "learning-plan-generator",
@@ -13,7 +85,23 @@
     "description": "为任何主题或技能创建个性化的、结构化的学习路径，包含里程碑、资源和时间表。",
     "category": "教育学习",
     "tags": [],
-    "date": "2025-03-20T02:57:31.822Z"
+    "date": "2025-03-20T03:53:01.839Z"
+  },
+  {
+    "slug": "logo-design-brief",
+    "title": "Logo设计指南",
+    "description": "根据品牌价值观和目标受众创建详细的Logo设计方案，包括风格、颜色、字体和应用场景建议。",
+    "category": "创意设计",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.839Z"
+  },
+  {
+    "slug": "predictive-modeling-assistant",
+    "title": "预测建模助手",
+    "description": "帮助构建和优化预测模型，提供特征选择、模型选择、评估及调优的专业指导。",
+    "category": "数据分析",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.840Z"
   },
   {
     "slug": "professional-article-generator",
@@ -21,6 +109,38 @@
     "description": "创建结构化、专业的文章，包含引人入胜的标题、精确的小标题和丰富的内容。",
     "category": "内容创作",
     "tags": [],
-    "date": "2025-03-20T02:57:31.822Z"
+    "date": "2025-03-20T03:53:01.840Z"
+  },
+  {
+    "slug": "social-media-content-calendar",
+    "title": "社交媒体内容日历生成器",
+    "description": "根据营销目标和受众特征，创建结构化的社交媒体内容日历，包括帖子类型、主题和发布时间。",
+    "category": "营销推广",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.840Z"
+  },
+  {
+    "slug": "story-idea-generator",
+    "title": "故事创意生成器",
+    "description": "生成原创故事创意，包括情节、角色设定和情感弧线，适用于小说、剧本或短篇故事。",
+    "category": "内容创作",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.840Z"
+  },
+  {
+    "slug": "ui-design-system-creator",
+    "title": "UI设计系统创建器",
+    "description": "构建完整的用户界面设计系统，包括组件规范、色彩系统、排版规则和交互模式。",
+    "category": "创意设计",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.840Z"
+  },
+  {
+    "slug": "website-design-consultant",
+    "title": "网站设计顾问",
+    "description": "根据业务需求和目标受众提供详细的网站设计建议，包括布局、色彩方案和用户体验优化。",
+    "category": "创意设计",
+    "tags": [],
+    "date": "2025-03-20T03:53:01.841Z"
   }
 ]

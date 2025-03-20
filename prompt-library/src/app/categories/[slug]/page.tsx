@@ -1,9 +1,12 @@
 import { Metadata } from 'next';
 import { getAllCategories, getAllPrompts } from '@/lib/prompts';
-import PromptCard from '@/components/PromptCard';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { SLUG_TO_CATEGORY } from '@/config/categories';
+import dynamic from 'next/dynamic';
+
+// 动态导入客户端组件，避免服务器端渲染错误
+const PaginatedPrompts = dynamic(() => import('@/components/PaginatedPrompts'), { ssr: false });
 
 interface CategoryPageProps {
   params: {
@@ -49,6 +52,10 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     prompt.category === category.name
   );
 
+  // 只传递第一页数据作为初始数据
+  const initialPageData = categoryPrompts.slice(0, 9);
+  const totalPages = Math.ceil(categoryPrompts.length / 9);
+
   return (
     <main>
       <section className="page-header">
@@ -61,16 +68,17 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
       <section className="prompts-list">
         {categoryPrompts.length > 0 ? (
-          <div className="prompt-grid">
-            {categoryPrompts.map(prompt => (
-              <PromptCard
-                key={prompt.slug}
-                prompt={prompt}
-                featured={prompt.featured}
-                isNew={prompt.isNew}
-              />
-            ))}
-          </div>
+          <PaginatedPrompts
+            type="category"
+            category={category.name}
+            initialData={initialPageData}
+            initialMeta={{
+              total: categoryPrompts.length,
+              perPage: 9,
+              totalPages: totalPages,
+              category: category.name
+            }}
+          />
         ) : (
           <div className="empty-state">
             <p>该分类下暂无提示词</p>

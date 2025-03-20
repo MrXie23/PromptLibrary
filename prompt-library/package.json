@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/generate-index.js && next dev",
-    "build": "node scripts/generate-index.js && next build",
+    "dev": "node scripts/generate-index.js && node scripts/generate-paginated-data.js && next dev",
+    "build": "node scripts/generate-index.js && node scripts/generate-paginated-data.js && next build",
     "build:optimized": "npm run build && node scripts/optimize-build.js",
     "start": "next start",
     "lint": "next lint",
     "export": "next export",
-    "deploy": "npm run build:optimized && touch out/.nojekyll"
+    "deploy": "npm run build:optimized && touch out/.nojekyll",
+    "generate-data": "node scripts/generate-index.js && node scripts/generate-paginated-data.js"
   },
   "dependencies": {
     "next": "^13.4.19",

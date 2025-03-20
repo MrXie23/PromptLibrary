@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "api-documentation-generator",
+    "title": "API文档生成器",
+    "description": "根据API代码或规范生成专业、完整的API文档，包括端点说明、参数详解和使用示例。",
+    "category": "编程开发",
+    "rating": 9.2,
+    "createdAt": "2025-01-25",
+    "featured": false,
+    "isNew": true
+  },
+  {
+    "slug": "code-refactoring-guide",
+    "title": "代码重构指南",
+    "description": "分析现有代码并提供详细的重构建议，改进代码结构、可读性和可维护性。",
+    "category": "编程开发",
+    "rating": 9.1,
+    "createdAt": "2025-01-22",
+    "featured": false,
+    "isNew": false
+  },
+  {
+    "slug": "code-optimization-assistant",
+    "title": "代码优化助手",
+    "description": "分析并优化您的代码，提供性能改进建议和最佳实践指导。",
+    "category": "编程开发",
+    "rating": 9.5,
+    "createdAt": "2025-01-20",
+    "featured": true,
+    "isNew": false
+  }
+]

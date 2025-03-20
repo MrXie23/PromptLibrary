@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "email-marketing-campaign",
+    "title": "电子邮件营销活动策划",
+    "description": "设计完整的电子邮件营销活动，包括目标设定、分段策略、邮件序列设计和性能预测。",
+    "category": "营销推广",
+    "rating": 9,
+    "createdAt": "2025-02-18",
+    "featured": false,
+    "isNew": true
+  },
+  {
+    "slug": "social-media-content-calendar",
+    "title": "社交媒体内容日历生成器",
+    "description": "根据营销目标和受众特征，创建结构化的社交媒体内容日历，包括帖子类型、主题和发布时间。",
+    "category": "营销推广",
+    "rating": 8.9,
+    "createdAt": "2025-02-12",
+    "featured": false,
+    "isNew": true
+  },
+  {
+    "slug": "digital-marketing-strategy",
+    "title": "数字营销策略规划",
+    "description": "根据业务目标和目标受众创建全面的数字营销策略，包括渠道选择、内容计划和KPI设定。",
+    "category": "营销推广",
+    "rating": 9.2,
+    "createdAt": "2025-02-05",
+    "featured": true,
+    "isNew": false
+  }
+]

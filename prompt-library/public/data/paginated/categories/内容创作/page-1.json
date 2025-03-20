@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "blog-content-planner",
+    "title": "博客内容规划师",
+    "description": "生成全面的博客内容计划，包括标题创意、关键词建议和主题大纲。",
+    "category": "内容创作",
+    "rating": 9.4,
+    "createdAt": "2025-02-05",
+    "featured": false,
+    "isNew": true
+  },
+  {
+    "slug": "story-idea-generator",
+    "title": "故事创意生成器",
+    "description": "生成原创故事创意，包括情节、角色设定和情感弧线，适用于小说、剧本或短篇故事。",
+    "category": "内容创作",
+    "rating": 9.3,
+    "createdAt": "2025-01-28",
+    "featured": false,
+    "isNew": true
+  },
+  {
+    "slug": "professional-article-generator",
+    "title": "专业文章生成器",
+    "description": "创建结构化、专业的文章，包含引人入胜的标题、精确的小标题和丰富的内容。",
+    "category": "内容创作",
+    "rating": 9.8,
+    "createdAt": "2025-01-15",
+    "featured": true,
+    "isNew": false
+  }
+]
