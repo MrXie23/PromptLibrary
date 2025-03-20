@@ -22,6 +22,9 @@ const PromptActions = dynamic(() => import('@/components/PromptActions'), {
   )
 });
 
+// 设置静态页面重新验证时间
+export const revalidate = 3600; // 每小时重新验证一次
+
 interface PromptPageProps {
   params: {
     slug: string;
@@ -45,6 +48,12 @@ export async function generateMetadata({ params }: PromptPageProps): Promise<Met
 
 export async function generateStaticParams() {
   const promptsDirectory = path.join(process.cwd(), 'prompts');
+
+  // 确保目录存在
+  if (!fs.existsSync(promptsDirectory)) {
+    return [];
+  }
+
   const files = fs.readdirSync(promptsDirectory);
 
   const params: Array<{ slug: string }> = [];
@@ -76,7 +85,7 @@ export default async function PromptPage({ params }: PromptPageProps) {
   return (
     <main className="prompt-detail">
       <section className="prompt-header">
-        <Link href="/prompts" className="back-link">
+        <Link href="/prompts" className="back-link" prefetch={true}>
           <i className="fa-solid fa-arrow-left"></i> 返回所有提示词
         </Link>
         <h1>{prompt.title}</h1>

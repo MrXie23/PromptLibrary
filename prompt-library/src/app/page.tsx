@@ -38,6 +38,9 @@ const fallbackPrompts: PromptData[] = [
   }
 ];
 
+// 添加静态生成标志
+export const revalidate = 3600; // 每小时重新生成一次页面
+
 export default function Home() {
   // 获取数据（带错误处理）
   let featuredPrompts: PromptData[] = [];
@@ -73,7 +76,7 @@ export default function Home() {
       <section className="featured">
         <div className="section-header">
           <h2>精选提示词</h2>
-          <Link href="/prompts/popular" className="view-all">
+          <Link href="/prompts/popular" className="view-all" prefetch={true}>
             查看热门 <i className="fa-solid fa-chevron-right"></i>
           </Link>
         </div>
@@ -104,7 +107,7 @@ export default function Home() {
       <section className="recent">
         <div className="section-header">
           <h2>最近添加</h2>
-          <Link href="/prompts" className="view-all">
+          <Link href="/prompts" className="view-all" prefetch={true}>
             查看全部 <i className="fa-solid fa-chevron-right"></i>
           </Link>
         </div>

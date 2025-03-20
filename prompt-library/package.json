@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "node scripts/generate-index.js && next dev",
     "build": "node scripts/generate-index.js && next build",
+    "build:optimized": "npm run build && node scripts/optimize-build.js",
     "start": "next start",
     "lint": "next lint",
-    "export": "next export"
+    "export": "next export",
+    "deploy": "npm run build:optimized && touch out/.nojekyll"
   },
   "dependencies": {
     "next": "^13.4.19",

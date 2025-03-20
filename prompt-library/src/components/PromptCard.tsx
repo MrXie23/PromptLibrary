@@ -25,7 +25,7 @@ export default function PromptCard({ prompt, featured = false, isNew = false }: 
           <span className="date">{prompt.createdAt}</span>
         )}
       </div>
-      <Link href={`/prompts/${prompt.slug}`} className="view-button">
+      <Link href={`/prompts/${prompt.slug}`} className="view-button" prefetch={true}>
         查看详情
       </Link>
     </div>
