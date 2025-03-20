@@ -51,6 +51,10 @@ const nextConfig = {
             from: "public/data",
             to: "PromptLibrary/data",
           },
+          {
+            from: "public/locales",
+            to: "PromptLibrary/locales",
+          },
         ],
       })
     );

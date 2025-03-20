@@ -29,6 +29,7 @@ function readCategoriesFromFile(): Omit<CategoryData, 'count'>[] {
         const slugMatch = item.match(/slug: ['"]([^'"]*)['"]/);
         const nameMatch = item.match(/name: ['"]([^'"]*)['"]/);
         const iconMatch = item.match(/icon: ['"]([^'"]*)['"]/);
+        const nameKeyMatch = item.match(/nameKey: ['"]([^'"]*)['"]/);
         
         if (!slugMatch || !nameMatch || !iconMatch) {
           throw new Error(`解析分类项时出错: ${item}`);
@@ -38,6 +39,7 @@ function readCategoriesFromFile(): Omit<CategoryData, 'count'>[] {
           slug: slugMatch[1],
           name: nameMatch[1],
           icon: iconMatch[1],
+          nameKey: nameKeyMatch ? nameKeyMatch[1] : undefined
         };
       });
     
@@ -56,7 +58,16 @@ function writeCategoriesFile(categories: Omit<CategoryData, 'count'>[]): boolean
     
     // 生成新的分类数组字符串
     const categoriesString = categories
-      .map(cat => `  { slug: '${cat.slug}', name: '${cat.name}', icon: '${cat.icon}' }`)
+      .map(cat => {
+        let str = `  { slug: '${cat.slug}', name: '${cat.name}'`;
+        
+        if (cat.nameKey) {
+          str += `, nameKey: '${cat.nameKey}'`;
+        }
+        
+        str += `, icon: '${cat.icon}' }`;
+        return str;
+      })
       .join(',\n');
     
     // 替换CATEGORIES数组
@@ -76,16 +87,22 @@ function writeCategoriesFile(categories: Omit<CategoryData, 'count'>[]): boolean
       `export const CATEGORY_TO_SLUG: Record<string, string> = {\n${categoryToSlugEntries}\n};`
     );
     
-    // 生成SLUG_TO_CATEGORY映射
-    const slugToCategoryEntries = categories
-      .map(cat => `  '${cat.slug}': '${cat.name}'`)
-      .join(',\n');
+    // 保存SLUG_TO_CATEGORY映射，如果存在的话
+    const slugToCategoryRegex = /export const SLUG_TO_CATEGORY: Record<string, string> = {([\s\S]*?)};/;
+    const slugToCategoryMatch = fileContent.match(slugToCategoryRegex);
     
-    // 替换SLUG_TO_CATEGORY映射
-    fileContent = fileContent.replace(
-      /export const SLUG_TO_CATEGORY: Record<string, string> = {([\s\S]*?)};/,
-      `export const SLUG_TO_CATEGORY: Record<string, string> = {\n${slugToCategoryEntries}\n};`
-    );
+    if (slugToCategoryMatch) {
+      // 生成SLUG_TO_CATEGORY映射
+      const slugToCategoryEntries = categories
+        .map(cat => `  '${cat.slug}': '${cat.name}'`)
+        .join(',\n');
+      
+      // 替换SLUG_TO_CATEGORY映射
+      fileContent = fileContent.replace(
+        slugToCategoryRegex,
+        `export const SLUG_TO_CATEGORY: Record<string, string> = {\n${slugToCategoryEntries}\n};`
+      );
+    }
     
     // 写入文件
     fs.writeFileSync(categoriesFilePath, fileContent);
@@ -182,12 +199,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(409).json({ error: `已存在slug为${newCategory.slug}的分类` });
       }
       
+      // 自动生成nameKey（如果未提供）
+      if (!newCategory.nameKey) {
+        switch (newCategory.name) {
+          case '内容创作': newCategory.nameKey = 'categories.content_creation'; break;
+          case '编程开发': newCategory.nameKey = 'categories.programming'; break;
+          case '创意设计': newCategory.nameKey = 'categories.creative_design'; break;
+          case '数据分析': newCategory.nameKey = 'categories.data_analysis'; break;
+          case '营销推广': newCategory.nameKey = 'categories.marketing'; break;
+          case '教育学习': newCategory.nameKey = 'categories.education'; break;
+          case '其他': newCategory.nameKey = 'categories.other'; break;
+          default: newCategory.nameKey = `categories.${newCategory.slug.replace(/-/g, '_')}`;
+        }
+      }
+      
       // 添加新分类 (不包含 count)
       const categoryWithoutCount = {
         slug: newCategory.slug,
         name: newCategory.name,
+        nameKey: newCategory.nameKey,
         icon: newCategory.icon
       };
+      
       categories.push(categoryWithoutCount);
       
       // 保存分类

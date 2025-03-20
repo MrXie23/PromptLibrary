@@ -1,15 +1,50 @@
 import { Metadata } from 'next';
-import Hero from '@/components/Hero';
-import PromptCard from '@/components/PromptCard';
-import CategoryItem from '@/components/CategoryItem';
-import Subscribe from '@/components/Subscribe';
-import Link from 'next/link';
 import {
   getFeaturedPrompts,
   getRecentPrompts,
   getAllCategories
 } from '@/lib/prompts';
 import { PromptData } from '@/types';
+import dynamic from 'next/dynamic';
+
+// 动态导入客户端组件
+const HomeContent = dynamic(() => import('@/components/HomeContent'), {
+  ssr: false,
+  loading: () => (
+    <main>
+      <section className="hero">
+        <div className="hero-content">
+          <h1 className="skeleton"></h1>
+          <p className="skeleton"></p>
+          <div className="search-container skeleton"></div>
+        </div>
+      </section>
+
+      <section className="featured">
+        <div className="section-header">
+          <h2 className="skeleton"></h2>
+          <div className="view-all skeleton"></div>
+        </div>
+        <div className="prompt-grid skeleton-loading">
+          {[...Array(3)].map((_, index) => (
+            <div key={index} className="prompt-card skeleton"></div>
+          ))}
+        </div>
+      </section>
+
+      <section className="categories">
+        <div className="section-header">
+          <h2 className="skeleton"></h2>
+        </div>
+        <div className="category-container skeleton-loading">
+          {[...Array(7)].map((_, index) => (
+            <div key={index} className="category-item skeleton"></div>
+          ))}
+        </div>
+      </section>
+    </main>
+  )
+});
 
 export const metadata: Metadata = {
   title: 'Prompt Library - AI提示词库',
@@ -68,62 +103,9 @@ export default function Home() {
 
   const categories = getAllCategories();
 
-  return (
-    <main>
-      <Hero />
-
-      {/* 特色提示词 */}
-      <section className="featured">
-        <div className="section-header">
-          <h2>精选提示词</h2>
-          <Link href="/prompts/popular" className="view-all" prefetch={true}>
-            查看热门 <i className="fa-solid fa-chevron-right"></i>
-          </Link>
-        </div>
-        <div className="prompt-grid">
-          {featuredPrompts.map((prompt, index) => (
-            <PromptCard
-              key={prompt.slug}
-              prompt={prompt}
-              featured={index === 0}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* 分类浏览 */}
-      <section className="categories">
-        <div className="section-header">
-          <h2>按分类浏览</h2>
-        </div>
-        <div className="category-container">
-          {categories.map(category => (
-            <CategoryItem key={category.slug} category={category} />
-          ))}
-        </div>
-      </section>
-
-      {/* 最近添加 */}
-      <section className="recent">
-        <div className="section-header">
-          <h2>最近添加</h2>
-          <Link href="/prompts" className="view-all" prefetch={true}>
-            查看全部 <i className="fa-solid fa-chevron-right"></i>
-          </Link>
-        </div>
-        <div className="prompt-grid">
-          {recentPrompts.map(prompt => (
-            <PromptCard
-              key={prompt.slug}
-              prompt={prompt}
-              isNew={true}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* 订阅区域
-      <Subscribe /> */}
-    </main>
-  );
+  return <HomeContent
+    featuredPrompts={featuredPrompts}
+    recentPrompts={recentPrompts}
+    categories={categories}
+  />;
 }

@@ -1,5 +1,15 @@
 [
   {
+    "slug": "predictive-modeling-assistant",
+    "title": "预测建模助手",
+    "description": "帮助构建和优化预测模型，提供特征选择、模型选择、评估及调优的专业指导。",
+    "category": "数据分析",
+    "rating": 9.4,
+    "createdAt": "2025-02-03",
+    "featured": false,
+    "isNew": true
+  },
+  {
     "slug": "exam-question-generator",
     "title": "考试题目生成器",
     "description": "根据指定主题和难度生成各种类型的考试题目，包括选择题、填空题和论述题。",
@@ -76,16 +86,6 @@
     "category": "数据分析",
     "rating": 9.5,
     "createdAt": "2025-01-18",
-    "featured": true,
-    "isNew": false
-  },
-  {
-    "slug": "professional-article-generator",
-    "title": "专业文章生成器",
-    "description": "创建结构化、专业的文章，包含引人入胜的标题、精确的小标题和丰富的内容。",
-    "category": "内容创作",
-    "rating": 9.8,
-    "createdAt": "2025-01-15",
     "featured": true,
     "isNew": false
   }

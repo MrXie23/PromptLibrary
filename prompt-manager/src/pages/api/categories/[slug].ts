@@ -28,6 +28,7 @@ function readCategoriesFromFile(): CategoryData[] {
         const slugMatch = item.match(/slug: ['"]([^'"]*)['"]/);
         const nameMatch = item.match(/name: ['"]([^'"]*)['"]/);
         const iconMatch = item.match(/icon: ['"]([^'"]*)['"]/);
+        const nameKeyMatch = item.match(/nameKey: ['"]([^'"]*)['"]/);
         const countMatch = item.match(/count: (\d+)/);
         
         if (!slugMatch || !nameMatch || !iconMatch) {
@@ -38,6 +39,7 @@ function readCategoriesFromFile(): CategoryData[] {
           slug: slugMatch[1],
           name: nameMatch[1],
           icon: iconMatch[1],
+          nameKey: nameKeyMatch ? nameKeyMatch[1] : undefined,
           count: countMatch ? parseInt(countMatch[1], 10) : 0,
         };
       });
@@ -57,7 +59,22 @@ function writeCategoriesFile(categories: CategoryData[]): boolean {
     
     // 生成新的分类数组字符串
     const categoriesString = categories
-      .map(cat => `  { slug: '${cat.slug}', name: '${cat.name}', icon: '${cat.icon}', count: ${cat.count} }`)
+      .map(cat => {
+        let str = `  { slug: '${cat.slug}', name: '${cat.name}'`;
+        
+        if (cat.nameKey) {
+          str += `, nameKey: '${cat.nameKey}'`;
+        }
+        
+        str += `, icon: '${cat.icon}'`;
+        
+        if (cat.count !== undefined) {
+          str += `, count: ${cat.count}`;
+        }
+        
+        str += ` }`;
+        return str;
+      })
       .join(',\n');
     
     // 替换CATEGORIES数组
@@ -77,16 +94,22 @@ function writeCategoriesFile(categories: CategoryData[]): boolean {
       `export const CATEGORY_TO_SLUG: Record<string, string> = {\n${categoryToSlugEntries}\n};`
     );
     
-    // 生成SLUG_TO_CATEGORY映射
-    const slugToCategoryEntries = categories
-      .map(cat => `  '${cat.slug}': '${cat.name}'`)
-      .join(',\n');
+    // 保存SLUG_TO_CATEGORY映射，如果存在的话
+    const slugToCategoryRegex = /export const SLUG_TO_CATEGORY: Record<string, string> = {([\s\S]*?)};/;
+    const slugToCategoryMatch = fileContent.match(slugToCategoryRegex);
     
-    // 替换SLUG_TO_CATEGORY映射
-    fileContent = fileContent.replace(
-      /export const SLUG_TO_CATEGORY: Record<string, string> = {([\s\S]*?)};/,
-      `export const SLUG_TO_CATEGORY: Record<string, string> = {\n${slugToCategoryEntries}\n};`
-    );
+    if (slugToCategoryMatch) {
+      // 生成SLUG_TO_CATEGORY映射
+      const slugToCategoryEntries = categories
+        .map(cat => `  '${cat.slug}': '${cat.name}'`)
+        .join(',\n');
+      
+      // 替换SLUG_TO_CATEGORY映射
+      fileContent = fileContent.replace(
+        slugToCategoryRegex,
+        `export const SLUG_TO_CATEGORY: Record<string, string> = {\n${slugToCategoryEntries}\n};`
+      );
+    }
     
     // 写入文件
     fs.writeFileSync(categoriesFilePath, fileContent);

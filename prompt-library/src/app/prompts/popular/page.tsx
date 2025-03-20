@@ -1,10 +1,32 @@
-import Link from 'next/link';
-import PromptCard from '@/components/PromptCard';
 import { getAllPrompts } from '@/lib/prompts';
 import { PromptData } from '@/types';
-import styles from './page.module.css';
 import { Metadata } from 'next';
-import ClientSideSort from './ClientSideSort';
+import dynamic from 'next/dynamic';
+
+// 动态导入客户端组件
+const PopularPromptsContent = dynamic(() => import('@/components/PopularPromptsContent'), {
+    ssr: false,
+    loading: () => (
+        <div className="container mx-auto px-4 py-8">
+            <div className="page-header">
+                <h1 className="page-title">热门提示词</h1>
+                <p className="page-description">
+                    发现用户最喜爱的提示词，这些提示词经过社区验证，效果出众且实用性强
+                </p>
+            </div>
+
+            <div className="filter-bar skeleton-loading">
+                <div className="skeleton"></div>
+            </div>
+
+            <div className="prompt-grid skeleton-loading">
+                {[...Array(9)].map((_, index) => (
+                    <div key={index} className="prompt-card skeleton"></div>
+                ))}
+            </div>
+        </div>
+    )
+});
 
 export const metadata: Metadata = {
     title: '热门提示词 - Prompt Library',
@@ -48,27 +70,5 @@ export default function PopularPromptsPage() {
         allPrompts = fallbackPrompts;
     }
 
-    return (
-        <div className="container mx-auto px-4 py-8">
-            <div className={styles['page-header']}>
-                <h1 className={styles['page-title']}>热门提示词</h1>
-                <p className={styles['page-description']}>
-                    发现用户最喜爱的提示词，这些提示词经过社区验证，效果出众且实用性强
-                </p>
-            </div>
-
-            {/* 客户端排序组件 */}
-            <ClientSideSort prompts={allPrompts} />
-
-            {/* 底部导航 */}
-            <div className={styles.pagination}>
-                <Link href="/prompts" className={styles['pagination-link']}>
-                    <i className="fa-solid fa-arrow-left"></i> 所有提示词
-                </Link>
-                <Link href="/categories" className={styles['pagination-link']}>
-                    按分类浏览 <i className="fa-solid fa-arrow-right"></i>
-                </Link>
-            </div>
-        </div>
-    );
+    return <PopularPromptsContent prompts={allPrompts} />;
 } 

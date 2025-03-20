@@ -1,0 +1,138 @@
+{
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "popular": "Popular",
+    "about": "About"
+  },
+  "footer": {
+    "navigation": "Navigation",
+    "resources": "Resources",
+    "legal": "Legal",
+    "github_repo": "GitHub Repository",
+    "feedback": "Feedback",
+    "documentation": "Documentation",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookie Policy",
+    "rights": "All Rights Reserved"
+  },
+  "language": {
+    "zh": "Chinese",
+    "en": "English"
+  },
+  "theme": {
+    "dark": "Dark Mode",
+    "light": "Light Mode"
+  },
+  "hero": {
+    "title": "Explore the Art of AI Prompting",
+    "subtitle": "Discover, use, and share curated prompts to unleash the full potential of AI",
+    "search_placeholder": "Search the prompt library...",
+    "search_button": "Search"
+  },
+  "homepage": {
+    "featured_prompts": "Featured Prompts",
+    "recently_added": "Recently Added",
+    "view_all_popular": "View Popular",
+    "view_all": "View All"
+  },
+  "categories": {
+    "title": "Browse Categories",
+    "subtitle": "Explore prompts across various domains",
+    "view_all": "View All",
+    "prompts_count": "{{count}} prompts",
+    "prompt_count_total": "Total of {{count}} prompts",
+    "content_creation": "Content Creation",
+    "programming": "Programming",
+    "creative_design": "Creative Design",
+    "data_analysis": "Data Analysis",
+    "marketing": "Marketing",
+    "education": "Education",
+    "other": "Other"
+  },
+  "popular": {
+    "title": "Popular Prompts",
+    "subtitle": "High-quality prompts loved by other users",
+    "view_all": "View All"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Mission and Vision of the Prompt Library",
+    "description": "Prompt Library is an open resource platform dedicated to collecting, sharing, and improving AI prompts across various domains. We believe that through community collaboration, we can create better quality prompts to help everyone interact with AI more effectively.",
+    "team": "Team",
+    "mission": "Mission",
+    "mission_text": "To provide high-quality AI prompts for everyone, making AI tools more accessible and understandable.",
+    "vision": "Vision",
+    "vision_text": "To build the world's most comprehensive library of AI prompts, making the power of AI technology available to more people."
+  },
+  "prompt_card": {
+    "by": "By",
+    "views": "Views",
+    "likes": "Likes",
+    "created": "Created",
+    "updated": "Updated",
+    "view_button": "View Details",
+    "copy_button": "Copy Prompt",
+    "copied": "Copied!",
+    "new": "New",
+    "featured": "Featured"
+  },
+  "prompt_detail": {
+    "description": "Description",
+    "content": "Prompt Content",
+    "usage": "How to Use",
+    "usage_text": "Copy the above prompt to your favorite AI tool, adjust as needed, and start creating!"
+  },
+  "search": {
+    "title": "Search Results",
+    "no_results": "No results found",
+    "placeholder": "Enter keywords to search...",
+    "searching": "Searching...",
+    "results_count": "Found {{count}} results"
+  },
+  "subscribe": {
+    "title": "Subscribe for Updates",
+    "subtitle": "Get the latest prompts and feature updates",
+    "email_placeholder": "Enter your email address",
+    "button": "Subscribe",
+    "success": "Successfully subscribed!",
+    "error": "Subscription failed, please try again later."
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{current}} of {{total}}"
+  },
+  "ui": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "try_again": "Try Again",
+    "no_data": "No data available",
+    "coming_soon": "Coming Soon",
+    "back_to_categories": "Back to all categories",
+    "back_to_all_prompts": "Back to all prompts",
+    "no_prompts_in_category": "No prompts in this category",
+    "browse_all_prompts": "Browse all prompts",
+    "how_to_contribute": "How to Contribute",
+    "share": "Share",
+    "share_prompt": "Share Prompt",
+    "copy_link": "Copy Link",
+    "copy_link_and_share": "Copy the link below to share this prompt:",
+    "link_copied": "Link copied!",
+    "copy_failed": "Copy failed!",
+    "share_social": "You can also share via social media:",
+    "check_prompt": "Check out this AI prompt: ",
+    "from_prompt_library": "from PromptLibrary",
+    "share_twitter": "Share on Twitter",
+    "share_linkedin": "Share on LinkedIn",
+    "share_facebook": "Share on Facebook",
+    "sort_by": "Sort by",
+    "sort_by_popularity": "Popularity (Default)",
+    "sort_by_date": "Date",
+    "no_popular_prompts": "No popular prompts yet",
+    "popular_prompts_coming_soon": "We're collecting user feedback and will add popular prompts soon",
+    "all_prompts": "All Prompts",
+    "browse_by_category": "Browse by Category"
+  }
+} 

@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Script from 'next/script'
+import { LanguageProvider } from '@/context/LanguageContext'
 
 export const metadata: Metadata = {
   title: 'Prompt Library - 探索AI提示的艺术',
@@ -40,11 +41,13 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <div className="container">
-          <Header />
-          {children}
-          <Footer />
-        </div>
+        <LanguageProvider>
+          <div className="container">
+            <Header />
+            {children}
+            <Footer />
+          </div>
+        </LanguageProvider>
         <Script
           src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"
           strategy="lazyOnload"

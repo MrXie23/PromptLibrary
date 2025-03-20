@@ -1244,3 +1244,49 @@ body.dark-mode .mobile-menu-toggle {
     height: 2rem;
   }
 }
+
+/* 语言切换器样式 */
+.language-switcher {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.language-options {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.language-options button {
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: color 0.3s;
+}
+
+.language-options button:hover {
+  color: var(--primary-color);
+}
+
+.language-options button.active {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.language-separator {
+  color: var(--border-color);
+  margin: 0 4px;
+}
+
+@media (max-width: 768px) {
+  .language-switcher {
+    margin-right: 0.5rem;
+  }
+
+  .language-options {
+    font-size: 0.8rem;
+  }
+}
