@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PromptData } from '@/types';
+import { useTranslation } from '../lib/i18n';
+import { useLanguage } from '../context/LanguageContext';
 
 interface PromptActionsProps {
     prompt: PromptData;
@@ -10,6 +12,15 @@ interface PromptActionsProps {
 export default function PromptActions({ prompt }: PromptActionsProps) {
     const [copyStatus, setCopyStatus] = useState('');
     const [showShareModal, setShowShareModal] = useState(false);
+    const { locale } = useLanguage();
+    const { t, isLoaded } = useTranslation();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (isLoaded) {
+            setLoading(false);
+        }
+    }, [isLoaded]);
 
     // 获取干净的提示词内容（移除HTML标签）
     const getCleanPromptContent = () => {
@@ -76,15 +87,28 @@ export default function PromptActions({ prompt }: PromptActionsProps) {
         }
     };
 
+    if (loading) {
+        return (
+            <section className="prompt-actions">
+                <button className="copy-button" disabled>
+                    <i className="fa-solid fa-copy"></i> ...
+                </button>
+                <button className="share-button" disabled>
+                    <i className="fa-solid fa-share-nodes"></i> ...
+                </button>
+            </section>
+        );
+    }
+
     return (
         <section className="prompt-actions">
             <button className="copy-button" onClick={handleCopy}>
-                <i className="fa-solid fa-copy"></i> 复制提示词
-                {copyStatus === 'success' && <span className="copy-status success">复制成功!</span>}
-                {copyStatus === 'error' && <span className="copy-status error">复制失败!</span>}
+                <i className="fa-solid fa-copy"></i> {t('prompt_card.copy_button')}
+                {copyStatus === 'success' && <span className="copy-status success">{t('prompt_card.copied')}</span>}
+                {copyStatus === 'error' && <span className="copy-status error">{t('ui.error')}</span>}
             </button>
             <button className="share-button" onClick={handleShare}>
-                <i className="fa-solid fa-share-nodes"></i> 分享
+                <i className="fa-solid fa-share-nodes"></i> {t('ui.share')}
             </button>
 
             {/* 分享模态框 */}
@@ -92,7 +116,7 @@ export default function PromptActions({ prompt }: PromptActionsProps) {
                 <div className="modal-overlay" onClick={handleCloseModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
-                            <h3>分享提示词</h3>
+                            <h3>{t('ui.share_prompt')}</h3>
                             <button
                                 className="close-button"
                                 onClick={handleCloseModal}
@@ -102,7 +126,7 @@ export default function PromptActions({ prompt }: PromptActionsProps) {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <p>复制以下链接并分享这个提示词：</p>
+                            <p>{t('ui.copy_link_and_share')}</p>
                             <div className="share-link-container">
                                 <input
                                     type="text"
@@ -113,24 +137,24 @@ export default function PromptActions({ prompt }: PromptActionsProps) {
                                 <button
                                     className="copy-link-button"
                                     onClick={handleCopyLink}
-                                    title="复制链接"
+                                    title={t('ui.copy_link')}
                                     style={{ width: '36px', height: '36px', minWidth: '36px', padding: 0 }}
                                 >
                                     <i className="fa-regular fa-copy" style={{ fontSize: '14px' }}></i>
                                 </button>
                             </div>
-                            {copyStatus === 'link-copied' && <p className="link-status success">链接已复制!</p>}
-                            {copyStatus === 'link-error' && <p className="link-status error">复制失败!</p>}
+                            {copyStatus === 'link-copied' && <p className="link-status success">{t('ui.link_copied')}</p>}
+                            {copyStatus === 'link-error' && <p className="link-status error">{t('ui.copy_failed')}</p>}
                         </div>
                         <div className="modal-footer">
-                            <p className="share-tip">您也可以使用下方社交媒体分享：</p>
+                            <p className="share-tip">{t('ui.share_social')}</p>
                             <div className="social-share">
                                 <a
-                                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}&text=${encodeURIComponent(`查看这个AI提示词："${prompt.title}" 来自PromptLibrary`)}`}
+                                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}&text=${encodeURIComponent(`${t('ui.check_prompt')}"${prompt.title}" ${t('ui.from_prompt_library')}`)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="social-share-button twitter"
-                                    title="分享到Twitter"
+                                    title={t('ui.share_twitter')}
                                     style={{ width: '36px', height: '36px' }}
                                 >
                                     <i className="fa-brands fa-twitter"></i>
@@ -140,7 +164,7 @@ export default function PromptActions({ prompt }: PromptActionsProps) {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="social-share-button linkedin"
-                                    title="分享到LinkedIn"
+                                    title={t('ui.share_linkedin')}
                                     style={{ width: '36px', height: '36px' }}
                                 >
                                     <i className="fa-brands fa-linkedin-in"></i>
@@ -150,7 +174,7 @@ export default function PromptActions({ prompt }: PromptActionsProps) {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="social-share-button facebook"
-                                    title="分享到Facebook"
+                                    title={t('ui.share_facebook')}
                                     style={{ width: '36px', height: '36px' }}
                                 >
                                     <i className="fa-brands fa-facebook-f"></i>

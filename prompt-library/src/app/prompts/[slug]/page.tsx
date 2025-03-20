@@ -1,24 +1,53 @@
 import { Metadata } from 'next';
 import { getPromptData, getAllPrompts } from '@/lib/prompts';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
 import dynamic from 'next/dynamic';
 
 // 动态导入客户端组件，避免 SSR 期间的错误
-const PromptActions = dynamic(() => import('@/components/PromptActions'), {
+const PromptDetailContent = dynamic(() => import('@/components/PromptDetailContent'), {
   ssr: false,
   loading: () => (
-    <section className="prompt-actions">
-      <button className="copy-button" disabled>
-        <i className="fa-solid fa-copy"></i> 复制提示词
-      </button>
-      <button className="share-button" disabled>
-        <i className="fa-solid fa-share-nodes"></i> 分享
-      </button>
-    </section>
+    <main className="prompt-detail">
+      <section className="prompt-header">
+        <div className="back-link skeleton">
+          <i className="fa-solid fa-arrow-left"></i> ...
+        </div>
+        <h1 className="skeleton">...</h1>
+        <div className="prompt-meta">
+          <span className="category skeleton">...</span>
+          <span className="popularity skeleton">...</span>
+          <span className="date skeleton">...</span>
+        </div>
+      </section>
+
+      <section className="prompt-content">
+        <div className="description">
+          <h2 className="skeleton">...</h2>
+          <p className="skeleton">...</p>
+        </div>
+
+        <div className="content">
+          <h2 className="skeleton">...</h2>
+          <div className="markdown-content skeleton">...</div>
+        </div>
+
+        <div className="usage">
+          <h2 className="skeleton">...</h2>
+          <p className="skeleton">...</p>
+        </div>
+      </section>
+
+      <section className="prompt-actions">
+        <button className="copy-button skeleton" disabled>
+          <i className="fa-solid fa-copy"></i> ...
+        </button>
+        <button className="share-button skeleton" disabled>
+          <i className="fa-solid fa-share-nodes"></i> ...
+        </button>
+      </section>
+    </main>
   )
 });
 
@@ -82,46 +111,5 @@ export default async function PromptPage({ params }: PromptPageProps) {
     notFound();
   }
 
-  return (
-    <main className="prompt-detail">
-      <section className="prompt-header">
-        <Link href="/prompts" className="back-link" prefetch={true}>
-          <i className="fa-solid fa-arrow-left"></i> 返回所有提示词
-        </Link>
-        <h1>{prompt.title}</h1>
-        <div className="prompt-meta">
-          <span className="category">{prompt.category}</span>
-          {prompt.rating && (
-            <span className="popularity">
-              <i className="fa-solid fa-star"></i> {prompt.rating}
-            </span>
-          )}
-          {prompt.createdAt && (
-            <span className="date">
-              发布于: {new Date(prompt.createdAt).toLocaleDateString('zh-CN')}
-            </span>
-          )}
-        </div>
-      </section>
-
-      <section className="prompt-content">
-        <div className="description">
-          <h2>描述</h2>
-          <p>{prompt.description}</p>
-        </div>
-
-        <div className="content">
-          <h2>提示词内容</h2>
-          <div className="markdown-content" dangerouslySetInnerHTML={{ __html: prompt.content || '' }} />
-        </div>
-
-        <div className="usage">
-          <h2>使用方法</h2>
-          <p>将上述提示词复制到您喜欢的AI工具中，根据需要调整具体内容，然后开始创作！</p>
-        </div>
-      </section>
-
-      <PromptActions prompt={prompt} />
-    </main>
-  );
+  return <PromptDetailContent prompt={prompt} />;
 }

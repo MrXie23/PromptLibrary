@@ -13,6 +13,7 @@ export interface PromptData {
   export interface CategoryData {
     slug: string;
     name: string;
+    nameKey?: string;
     icon: string;
     count?: number;
   }
