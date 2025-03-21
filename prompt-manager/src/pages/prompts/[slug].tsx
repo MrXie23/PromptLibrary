@@ -15,7 +15,6 @@ import remarkGfm from 'remark-gfm';
 import { format } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
 import { Prompt } from '@/types';
-import { getPromptBySlug, deletePrompt } from '@/lib/promptUtils';
 
 export default function PromptDetail() {
     const router = useRouter();
@@ -31,10 +30,17 @@ export default function PromptDetail() {
 
         const fetchPrompt = async () => {
             try {
-                const promptData = await getPromptBySlug(slug as string);
-                setPrompt(promptData);
+                const response = await fetch(`/api/prompts/${slug}`);
+                if (response.ok) {
+                    const promptData = await response.json();
+                    setPrompt(promptData);
+                } else {
+                    console.error('获取提示API响应错误:', response.status);
+                    setPrompt(null);
+                }
             } catch (error) {
                 console.error('获取提示时出错:', error);
+                setPrompt(null);
             } finally {
                 setIsLoading(false);
             }
@@ -55,13 +61,17 @@ export default function PromptDetail() {
     };
 
     const handleDelete = async () => {
-        if (!prompt) return;
+        if (!prompt || !prompt.slug) return;
 
         try {
-            const success = await deletePrompt(prompt.slug);
+            const response = await fetch(`/api/prompts/${prompt.slug}`, {
+                method: 'DELETE',
+            });
 
-            if (success) {
+            if (response.ok) {
                 router.push('/prompts');
+            } else {
+                console.error('删除提示API响应错误:', response.status);
             }
         } catch (error) {
             console.error('删除提示时出错:', error);

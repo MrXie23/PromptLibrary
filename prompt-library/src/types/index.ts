@@ -1,3 +1,7 @@
+// 导出所有通用类型
+export * from './common';
+
+// 为了保持兼容性的旧类型定义，可以在后续版本中移除
 export interface PromptData {
     slug: string;
     title: string;

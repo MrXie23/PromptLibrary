@@ -133,6 +133,8 @@
     "no_popular_prompts": "No popular prompts yet",
     "popular_prompts_coming_soon": "We're collecting user feedback and will add popular prompts soon",
     "all_prompts": "All Prompts",
-    "browse_by_category": "Browse by Category"
+    "browse_by_category": "Browse by Category",
+    "expand": "Expand All",
+    "collapse": "Collapse"
   }
 } 

@@ -85,11 +85,12 @@ export default function HomeContent({ featuredPrompts, recentPrompts, categories
                     </Link>
                 </div>
                 <div className="prompt-grid">
-                    {featuredPrompts.map((prompt, index) => (
+                    {featuredPrompts.map((prompt) => (
                         <PromptCard
                             key={prompt.slug}
                             prompt={prompt}
-                            featured={index === 0}
+                            featured={prompt.featured}
+                            isNew={prompt.isNew}
                         />
                     ))}
                 </div>
@@ -120,6 +121,7 @@ export default function HomeContent({ featuredPrompts, recentPrompts, categories
                         <PromptCard
                             key={prompt.slug}
                             prompt={prompt}
+                            featured={prompt.featured}
                             isNew={true}
                         />
                     ))}

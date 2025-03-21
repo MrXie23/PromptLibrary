@@ -3,15 +3,16 @@ import Link from 'next/link';
 import { StarIcon, TagIcon } from '@heroicons/react/24/solid';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { Prompt } from '@/types';
-import { format } from 'date-fns';
+import { format, differenceInDays } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
 
 interface PromptCardProps {
     prompt: Prompt;
     onDelete?: (slug: string) => void;
+    isNew?: boolean; // 可选的isNew属性，允许外部传入
 }
 
-const PromptCard: React.FC<PromptCardProps> = ({ prompt, onDelete }) => {
+const PromptCard: React.FC<PromptCardProps> = ({ prompt, onDelete, isNew: explicitIsNew }) => {
     const {
         slug,
         title,
@@ -20,11 +21,14 @@ const PromptCard: React.FC<PromptCardProps> = ({ prompt, onDelete }) => {
         rating,
         createdAt,
         featured,
-        isNew
     } = prompt;
 
     // 格式化日期
     const formattedDate = format(new Date(createdAt), 'yyyy年MM月dd日', { locale: zhCN });
+
+    // 判断是否为新提示 (如果未明确指定isNew，则根据创建时间判断7天内的为新提示)
+    const isCreatedRecently = differenceInDays(new Date(), new Date(createdAt)) <= 7;
+    const isNew = explicitIsNew !== undefined ? explicitIsNew : isCreatedRecently;
 
     return (
         <div className="bg-white rounded-xl shadow-apple-sm hover:shadow-apple-md transition-shadow duration-300 overflow-hidden">

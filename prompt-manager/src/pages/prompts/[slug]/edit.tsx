@@ -3,8 +3,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { ArrowLeftIcon, PencilIcon } from '@heroicons/react/24/outline';
 import { CategoryData, Prompt } from '@/types';
-import { getPromptBySlug, savePrompt } from '@/lib/promptUtils';
-import { getAllCategories } from '@/lib/categoryUtils';
 
 export default function EditPrompt() {
     const router = useRouter();
@@ -30,14 +28,17 @@ export default function EditPrompt() {
 
         const fetchData = async () => {
             try {
-                // 获取提示数据
-                const promptData = await getPromptBySlug(slug as string);
+                // 获取提示数据 - 使用API
+                const promptResponse = await fetch(`/api/prompts/${slug}`);
 
-                if (!promptData) {
+                if (!promptResponse.ok) {
+                    console.error('获取提示API响应错误:', promptResponse.status);
                     setError('未找到提示');
                     setIsLoading(false);
                     return;
                 }
+
+                const promptData = await promptResponse.json();
 
                 setPrompt(promptData);
                 setTitle(promptData.title);
@@ -47,10 +48,17 @@ export default function EditPrompt() {
                 setFeatured(promptData.featured);
                 setIsNew(promptData.isNew);
                 setCreatedAt(promptData.createdAt);
+                setRating(promptData.rating || 8.0);
 
-                // 获取分类数据
-                const allCategories = await getAllCategories();
-                setCategories(allCategories);
+                // 获取分类数据 - 使用API
+                const categoriesResponse = await fetch('/api/categories');
+
+                if (categoriesResponse.ok) {
+                    const allCategories = await categoriesResponse.json();
+                    setCategories(allCategories);
+                } else {
+                    console.error('获取分类API响应错误:', categoriesResponse.status);
+                }
             } catch (error) {
                 console.error('获取数据时出错:', error);
                 setError('加载数据失败');
@@ -71,7 +79,7 @@ export default function EditPrompt() {
             return;
         }
 
-        if (!prompt) {
+        if (!prompt || !prompt.slug) {
             setError('找不到要更新的提示');
             return;
         }
@@ -84,16 +92,25 @@ export default function EditPrompt() {
             category,
             content,
             featured,
-            isNew
+            isNew,
+            rating
         };
 
         try {
-            const success = await savePrompt(updatedPrompt);
+            // 使用API更新提示
+            const response = await fetch(`/api/prompts/${prompt.slug}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedPrompt),
+            });
 
-            if (success) {
+            if (response.ok) {
                 // 成功保存，跳转到提示详情页
                 router.push(`/prompts/${prompt.slug}`);
             } else {
+                console.error('保存提示API响应错误:', response.status);
                 setError('保存提示失败');
             }
         } catch (error) {

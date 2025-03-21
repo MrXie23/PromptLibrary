@@ -1,7 +1,9 @@
-// import fs from 'fs';
+import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { Prompt, PromptMetadata, PromptFrontmatter } from '@/types';
+import { remark } from 'remark';
+import html from 'remark-html';
+import { Prompt, PromptFrontmatter, PromptMetadata } from '@/types';
 import { 
   PROMPTS_DIRECTORY, 
   ensureDirectoryExists,
@@ -12,34 +14,22 @@ import {
   generateUniqueSlug
 } from './utils';
 
-// 确保提示词目录存在（仅在服务器端）
-if (typeof window === 'undefined') {
-  ensureDirectoryExists(PROMPTS_DIRECTORY);
-  console.log("在服务器端初始化promptUtils, PROMPTS_DIRECTORY:", PROMPTS_DIRECTORY);
-}
+// 确保提示词目录存在
+ensureDirectoryExists(PROMPTS_DIRECTORY);
 
 /**
  * 获取所有提示词的slug列表
  * @returns 所有提示词的slug列表
  */
 export function getPromptSlugs(): string[] {
-  // 客户端不应直接调用此方法
-  if (typeof window !== 'undefined') {
-    console.warn('getPromptSlugs() 被从客户端调用，应该使用API');
-    return [];
-  }
-  
   try {
-    // 动态导入fs
-    const fs = require('fs');
-    
     // 读取目录下的所有文件
     const files = fs.readdirSync(PROMPTS_DIRECTORY);
     
     // 过滤出.md文件并去掉扩展名
     return files
-      .filter((file: string) => file.endsWith('.md'))
-      .map((file: string) => file.replace(/\.md$/, ''));
+      .filter(file => file.endsWith('.md'))
+      .map(file => file.replace(/\.md$/, ''));
   } catch (error) {
     console.error('获取提示文件列表出错:', error);
     return [];
@@ -51,19 +41,9 @@ export function getPromptSlugs(): string[] {
  * @returns 所有提示词数据
  */
 export function getAllPrompts(): Prompt[] {
-  // 客户端不应直接调用此方法
-  if (typeof window !== 'undefined') {
-    console.warn('getAllPrompts() 被从客户端调用，应该使用API');
-    return [];
-  }
-  
   const slugs = getPromptSlugs();
-  console.log(`从目录找到${slugs.length}个slug`);
-  
   const prompts = slugs.map(slug => getPromptBySlug(slug))
     .filter((prompt): prompt is Prompt => prompt !== null);
-  
-  console.log(`成功加载${prompts.length}个提示词`);
   
   // 按创建日期排序，最新的排在前面
   return prompts.sort((a, b) => {
@@ -79,26 +59,13 @@ export function getAllPrompts(): Prompt[] {
  * @returns 提示词数据或null
  */
 export function getPromptBySlug(slug: string): Prompt | null {
-  // 客户端不应直接调用此方法
-  if (typeof window !== 'undefined') {
-    console.warn('getPromptBySlug() 被从客户端调用，应该使用API');
-    return null;
-  }
-  
   try {
-    // 动态导入fs
-    const fs = require('fs');
-    const nodePath = require('path');
-    
     // 清理slug，移除可能的扩展名
     const cleanSlug = slug.replace(/\.md$/, '');
     
     // 检查.md文件是否存在
-    const mdPath = nodePath.join(PROMPTS_DIRECTORY, `${cleanSlug}.md`);
-    console.log(`尝试读取文件: ${mdPath}`);
-    
+    const mdPath = path.join(PROMPTS_DIRECTORY, `${cleanSlug}.md`);
     if (!fs.existsSync(mdPath)) {
-      console.error(`找不到文件: ${mdPath}`);
       return null;
     }
     
@@ -107,7 +74,7 @@ export function getPromptBySlug(slug: string): Prompt | null {
     const { data, content } = matter(fileContent);
     
     // 读取元数据文件
-    const metadataPath = nodePath.join(PROMPTS_DIRECTORY, `${cleanSlug}.json`);
+    const metadataPath = path.join(PROMPTS_DIRECTORY, `${cleanSlug}.json`);
     const metadataContent = safeReadFile(metadataPath);
     const metadata = safeParseJson<Partial<PromptMetadata>>(metadataContent, {});
     
@@ -136,6 +103,23 @@ export function getPromptBySlug(slug: string): Prompt | null {
 }
 
 /**
+ * 获取提示词内容（处理为HTML）
+ * @param slug 提示词slug
+ * @returns 提示词HTML内容
+ */
+export async function getPromptContentHtml(slug: string): Promise<string> {
+  const prompt = getPromptBySlug(slug);
+  if (!prompt) return '';
+  
+  // 处理Markdown内容为HTML
+  const processedContent = await remark()
+    .use(html)
+    .process(prompt.content);
+    
+  return processedContent.toString();
+}
+
+/**
  * 创建新的提示词
  * @param promptData 提示词数据（不含slug）
  * @param customSlug 自定义slug（可选）
@@ -145,16 +129,7 @@ export function createPrompt(
   promptData: Omit<Prompt, 'slug'>, 
   customSlug?: string
 ): Prompt | null {
-  // 客户端不应直接调用此方法
-  if (typeof window !== 'undefined') {
-    console.warn('createPrompt() 被从客户端调用，应该使用API');
-    return null;
-  }
-  
   try {
-    // 动态导入
-    const nodePath = require('path');
-    
     // 生成或使用自定义slug
     const slug = customSlug || generateUniqueSlug(promptData.title);
     
@@ -181,34 +156,26 @@ export function createPrompt(
     const markdownContent = `---\n${yamlFrontmatter}\n---\n\n${content}`;
     
     // 保存.md文件
-    const mdPath = nodePath.join(PROMPTS_DIRECTORY, `${slug}.md`);
-    console.log(`尝试保存文件: ${mdPath}`);
-    
+    const mdPath = path.join(PROMPTS_DIRECTORY, `${slug}.md`);
     if (!safeWriteFile(mdPath, markdownContent)) {
       return null;
     }
     
     // 准备元数据
     const metadata: PromptMetadata = {
-      views: promptData.views,
-      likes: promptData.likes,
-      usageCount: promptData.usageCount,
-      favoriteCount: promptData.favoriteCount,
       featured: promptData.featured,
       createdAt: promptData.createdAt,
       updatedAt: promptData.updatedAt,
-      rating: promptData.rating || 0,
+      rating: promptData.rating,
     };
     
     // 保存元数据文件
-    const metadataPath = nodePath.join(PROMPTS_DIRECTORY, `${slug}.json`);
+    const metadataPath = path.join(PROMPTS_DIRECTORY, `${slug}.json`);
     if (!safeWriteFile(metadataPath, JSON.stringify(metadata, null, 2))) {
       // 如果元数据保存失败，删除已创建的md文件
       safeDeleteFile(mdPath);
       return null;
     }
-    
-    console.log(`成功创建提示词: ${slug}`);
     
     // 返回完整的提示词数据
     return {
@@ -228,20 +195,10 @@ export function createPrompt(
  * @returns 是否更新成功
  */
 export function updatePrompt(slug: string, promptData: Partial<Prompt>): boolean {
-  // 客户端不应直接调用此方法
-  if (typeof window !== 'undefined') {
-    console.warn('updatePrompt() 被从客户端调用，应该使用API');
-    return false;
-  }
-
   try {
-    // 动态导入依赖
-    const nodePath = require('path');
-    
     // 获取现有提示词
     const existingPrompt = getPromptBySlug(slug);
     if (!existingPrompt) {
-      console.error(`找不到要更新的提示: ${slug}`);
       return false;
     }
     
@@ -262,7 +219,7 @@ export function updatePrompt(slug: string, promptData: Partial<Prompt>): boolean
       tags: updatedPrompt.tags,
     };
     
-    // 使用字符串格式生成markdown文件内容
+    // 生成markdown内容
     const content = updatedPrompt.content || '';
     const yamlFrontmatter = Object.entries(frontmatter)
       .map(([key, value]) => {
@@ -276,34 +233,22 @@ export function updatePrompt(slug: string, promptData: Partial<Prompt>): boolean
     const markdownContent = `---\n${yamlFrontmatter}\n---\n\n${content}`;
     
     // 更新.md文件
-    const mdPath = nodePath.join(PROMPTS_DIRECTORY, `${slug}.md`);
-    console.log(`尝试更新文件: ${mdPath}`);
-    
+    const mdPath = path.join(PROMPTS_DIRECTORY, `${slug}.md`);
     if (!safeWriteFile(mdPath, markdownContent)) {
-      console.error(`更新Markdown文件失败: ${mdPath}`);
       return false;
     }
     
     // 更新元数据
     const metadata: PromptMetadata = {
-      views: updatedPrompt.views,
-      likes: updatedPrompt.likes,
-      usageCount: updatedPrompt.usageCount,
-      favoriteCount: updatedPrompt.favoriteCount,
       featured: updatedPrompt.featured,
       createdAt: updatedPrompt.createdAt,
       updatedAt: updatedPrompt.updatedAt,
-      rating: updatedPrompt.rating || 0,
+      rating: updatedPrompt.rating,
     };
     
     // 保存元数据文件
-    const metadataPath = nodePath.join(PROMPTS_DIRECTORY, `${slug}.json`);
-    console.log(`尝试更新元数据文件: ${metadataPath}`);
-    
-    const result = safeWriteFile(metadataPath, JSON.stringify(metadata, null, 2));
-    console.log(`更新元数据结果: ${result ? '成功' : '失败'}`);
-    
-    return result;
+    const metadataPath = path.join(PROMPTS_DIRECTORY, `${slug}.json`);
+    return safeWriteFile(metadataPath, JSON.stringify(metadata, null, 2));
   } catch (error) {
     console.error(`更新提示词 ${slug} 出错:`, error);
     return false;
@@ -316,28 +261,13 @@ export function updatePrompt(slug: string, promptData: Partial<Prompt>): boolean
  * @returns 是否删除成功
  */
 export function deletePrompt(slug: string): boolean {
-  // 客户端不应直接调用此方法
-  if (typeof window !== 'undefined') {
-    console.warn('deletePrompt() 被从客户端调用，应该使用API');
-    return false;
-  }
-  
   try {
-    // 动态导入依赖
-    const nodePath = require('path');
-    
-    console.log(`尝试删除提示: ${slug}`);
-    
-    const mdPath = nodePath.join(PROMPTS_DIRECTORY, `${slug}.md`);
-    const jsonPath = nodePath.join(PROMPTS_DIRECTORY, `${slug}.json`);
-    
-    console.log(`删除文件: ${mdPath} 和 ${jsonPath}`);
+    const mdPath = path.join(PROMPTS_DIRECTORY, `${slug}.md`);
+    const jsonPath = path.join(PROMPTS_DIRECTORY, `${slug}.json`);
     
     // 删除两个文件
     const mdDeleted = safeDeleteFile(mdPath);
     const jsonDeleted = safeDeleteFile(jsonPath);
-    
-    console.log(`删除结果: .md文件 - ${mdDeleted ? '成功' : '失败'}, .json文件 - ${jsonDeleted ? '成功' : '失败'}`);
     
     // 只要有一个文件删除成功，就认为删除操作成功
     return mdDeleted || jsonDeleted;

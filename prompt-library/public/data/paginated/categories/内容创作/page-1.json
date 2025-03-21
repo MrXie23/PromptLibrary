@@ -8,12 +8,7 @@
     "tags": [],
     "createdAt": "2025-03-20",
     "updatedAt": "2025-03-20T08:21:09.743Z",
-    "views": 0,
-    "likes": 0,
-    "usageCount": 0,
-    "favoriteCount": 0,
-    "featured": false,
-    "isNew": false
+    "featured": false
   },
   {
     "slug": "blog-content-planner",
@@ -22,8 +17,7 @@
     "category": "内容创作",
     "rating": 9.4,
     "createdAt": "2025-02-05",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "story-idea-generator",
@@ -32,17 +26,18 @@
     "category": "内容创作",
     "rating": 9.3,
     "createdAt": "2025-01-28",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "professional-article-generator",
     "title": "专业文章生成器",
     "description": "创建结构化、专业的文章，包含引人入胜的标题、精确的小标题和丰富的内容。",
     "category": "内容创作",
-    "rating": 9.8,
+    "author": "",
+    "tags": [],
+    "featured": false,
     "createdAt": "2025-01-15",
-    "featured": true,
-    "isNew": false
+    "updatedAt": "2025-03-21T06:56:19.523Z",
+    "rating": 9.8
   }
 ]

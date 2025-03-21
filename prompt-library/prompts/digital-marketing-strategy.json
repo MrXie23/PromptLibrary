@@ -1,7 +1,6 @@
 {
-  "slug": "digital-marketing-strategy",
-  "rating": 9.2,
+  "featured": false,
   "createdAt": "2025-02-05",
-  "featured": true,
-  "isNew": false
-} 
+  "updatedAt": "2025-03-21T06:56:49.127Z",
+  "rating": 9.2
+}

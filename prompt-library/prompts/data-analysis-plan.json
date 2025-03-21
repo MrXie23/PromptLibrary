@@ -1,7 +1,6 @@
 {
-  "slug": "data-analysis-plan",
-  "rating": 9.5,
+  "featured": false,
   "createdAt": "2025-01-18",
-  "featured": true,
-  "isNew": false
-} 
+  "updatedAt": "2025-03-21T06:56:38.868Z",
+  "rating": 9.5
+}

@@ -8,8 +8,6 @@ import {
 } from '@heroicons/react/24/outline';
 import PromptCard from '@/components/PromptCard';
 import { Prompt, CategoryData } from '@/types';
-import { getAllPrompts, deletePrompt } from '@/lib/promptUtils';
-import { getAllCategories } from '@/lib/categoryUtils';
 
 export default function PromptList() {
     const router = useRouter();
@@ -34,13 +32,29 @@ export default function PromptList() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const allPrompts = await getAllPrompts();
-                setPrompts(allPrompts);
+                // 改用API获取提示词数据
+                const promptsResponse = await fetch('/api/prompts');
+                if (promptsResponse.ok) {
+                    const allPrompts = await promptsResponse.json();
+                    setPrompts(allPrompts);
+                } else {
+                    console.error('获取提示词API响应错误:', promptsResponse.status);
+                    setPrompts([]);
+                }
 
-                const allCategories = await getAllCategories();
-                setCategories(allCategories);
+                // 改用API获取分类数据
+                const categoriesResponse = await fetch('/api/categories');
+                if (categoriesResponse.ok) {
+                    const allCategories = await categoriesResponse.json();
+                    setCategories(allCategories);
+                } else {
+                    console.error('获取分类API响应错误:', categoriesResponse.status);
+                    setCategories([]);
+                }
             } catch (error) {
                 console.error('获取数据时出错:', error);
+                setPrompts([]);
+                setCategories([]);
             } finally {
                 setIsLoading(false);
             }
@@ -75,11 +89,16 @@ export default function PromptList() {
     const handleDeletePrompt = async (slug: string) => {
         if (confirm(`确定要删除这个提示吗？此操作无法撤销。`)) {
             try {
-                const success = await deletePrompt(slug);
+                // 改用API删除提示词
+                const response = await fetch(`/api/prompts/${slug}`, {
+                    method: 'DELETE',
+                });
 
-                if (success) {
+                if (response.ok) {
                     // 从列表中移除已删除的提示
                     setPrompts(prompts.filter(p => p.slug !== slug));
+                } else {
+                    console.error('删除提示API响应错误:', response.status);
                 }
             } catch (error) {
                 console.error('删除提示时出错:', error);
@@ -113,7 +132,7 @@ export default function PromptList() {
     // 应用排序
     switch (sortBy) {
         case 'highest-rated':
-            filteredPrompts.sort((a, b) => b.rating - a.rating);
+            filteredPrompts.sort((a, b) => (b.rating || 0) - (a.rating || 0));
             break;
         case 'a-z':
             filteredPrompts.sort((a, b) => a.title.localeCompare(b.title));
@@ -125,6 +144,11 @@ export default function PromptList() {
         default:
             filteredPrompts.sort((a, b) =>
                 new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            );
+            break;
+        case 'rating':
+            filteredPrompts.sort((a, b) =>
+                (b.rating || 0) - (a.rating || 0)
             );
             break;
     }
@@ -203,8 +227,8 @@ export default function PromptList() {
                                     <button
                                         onClick={() => setFilterCategory(null)}
                                         className={`px-3 py-1 rounded-full text-sm ${filterCategory === null
-                                                ? 'bg-apple-blue text-white'
-                                                : 'bg-apple-gray text-apple-darkGray hover:bg-gray-200'
+                                            ? 'bg-apple-blue text-white'
+                                            : 'bg-apple-gray text-apple-darkGray hover:bg-gray-200'
                                             }`}
                                     >
                                         全部
@@ -215,8 +239,8 @@ export default function PromptList() {
                                             key={cat.slug}
                                             onClick={() => setFilterCategory(cat.slug)}
                                             className={`px-3 py-1 rounded-full text-sm ${filterCategory === cat.slug
-                                                    ? 'bg-apple-blue text-white'
-                                                    : 'bg-apple-gray text-apple-darkGray hover:bg-gray-200'
+                                                ? 'bg-apple-blue text-white'
+                                                : 'bg-apple-gray text-apple-darkGray hover:bg-gray-200'
                                                 }`}
                                         >
                                             {cat.name}

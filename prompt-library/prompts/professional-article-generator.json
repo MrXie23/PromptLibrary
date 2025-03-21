@@ -1,7 +1,6 @@
 {
-    "slug": "professional-article-generator",
-    "rating": 9.8,
-    "createdAt": "2025-01-15",
-    "featured": true,
-    "isNew": false
-  }
+  "featured": false,
+  "createdAt": "2025-01-15",
+  "updatedAt": "2025-03-21T06:56:19.523Z",
+  "rating": 9.8
+}

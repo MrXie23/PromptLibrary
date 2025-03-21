@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { PromptData } from '@/types';
 import { useTranslation } from '../lib/i18n';
@@ -15,12 +15,75 @@ export default function PromptDetailContent({ prompt }: PromptDetailContentProps
     const { locale } = useLanguage();
     const { t, isLoaded } = useTranslation();
     const [loading, setLoading] = useState(true);
+    const [isExpanded, setIsExpanded] = useState(false);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const [needsToggle, setNeedsToggle] = useState(false);
+    const [isScrolledToBottom, setIsScrolledToBottom] = useState(false);
 
     useEffect(() => {
         if (isLoaded) {
             setLoading(false);
         }
     }, [isLoaded]);
+
+    // 检测内容是否需要展开/收起按钮
+    useEffect(() => {
+        if (contentRef.current) {
+            // 如果内容高度超过容器，显示展开/收起按钮
+            const checkOverflow = () => {
+                if (contentRef.current) {
+                    const isOverflowing = contentRef.current.scrollHeight > contentRef.current.clientHeight;
+                    setNeedsToggle(isOverflowing);
+                }
+            };
+
+            // 初始检查
+            checkOverflow();
+
+            // 当窗口大小改变时重新检查
+            window.addEventListener('resize', checkOverflow);
+
+            return () => {
+                window.removeEventListener('resize', checkOverflow);
+            };
+        }
+    }, [loading, prompt.content]);
+
+    // 监听滚动事件，检测是否滚动到底部
+    useEffect(() => {
+        const contentElement = contentRef.current;
+        if (!contentElement) return;
+
+        const handleScroll = () => {
+            if (contentElement) {
+                // 判断是否滚动到底部 (容差为2像素)
+                const scrollPosition = contentElement.scrollHeight - contentElement.scrollTop - contentElement.clientHeight;
+                const isAtBottom = scrollPosition < 2;
+
+                // 如果状态变化了，才更新状态，避免不必要的重新渲染
+                if (isAtBottom !== isScrolledToBottom) {
+                    setIsScrolledToBottom(isAtBottom);
+                }
+            }
+        };
+
+        contentElement.addEventListener('scroll', handleScroll);
+
+        // 初始检查
+        handleScroll();
+
+        return () => {
+            contentElement.removeEventListener('scroll', handleScroll);
+        };
+    }, [isScrolledToBottom]);
+
+    // 切换展开/收起状态
+    const toggleContent = () => {
+        console.log('当前状态:', isExpanded, '切换到:', !isExpanded);
+        setIsExpanded(!isExpanded);
+        // 重置滚动状态
+        setIsScrolledToBottom(false);
+    };
 
     // 为分类名称映射到翻译键
     const getCategoryTranslationKey = (category: string) => {
@@ -126,7 +189,34 @@ export default function PromptDetailContent({ prompt }: PromptDetailContentProps
 
                 <div className="content">
                     <h2>{t('prompt_detail.content')}</h2>
-                    <div className="markdown-content" dangerouslySetInnerHTML={{ __html: prompt.content || '' }} />
+                    <div className="content-container">
+                        <div
+                            ref={contentRef}
+                            className={`markdown-content ${isExpanded ? 'expanded' : ''} ${isScrolledToBottom && !isExpanded ? 'scrolled-bottom' : ''}`}
+                            dangerouslySetInnerHTML={{ __html: prompt.content || '' }}
+                        />
+                        {!isExpanded && <div className={`content-mask ${isScrolledToBottom ? 'hidden' : ''}`}></div>}
+                    </div>
+                    {needsToggle && (
+                        <div className="content-toggle">
+                            <button
+                                onClick={toggleContent}
+                                className={isExpanded ? 'expanded' : ''}
+                                data-expanded={isExpanded}
+                            >
+                                <span>{isExpanded ? t('ui.collapse') : t('ui.expand')}</span>
+                                {isExpanded ? (
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <polyline points="18 15 12 9 6 15"></polyline>
+                                    </svg>
+                                ) : (
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                )}
+                            </button>
+                        </div>
+                    )}
                 </div>
 
                 <div className="usage">

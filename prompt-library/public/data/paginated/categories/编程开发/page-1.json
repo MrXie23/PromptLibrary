@@ -1,13 +1,22 @@
 [
   {
+    "slug": "cusor-rule-sample",
+    "title": "cursor rule提示词样例",
+    "description": "在cursor中使用，用来指导约束AI，使AI编码效率更高",
+    "category": "编程开发",
+    "createdAt": "2025-03-21",
+    "updatedAt": "2025-03-21T08:03:20.578Z",
+    "rating": 10,
+    "featured": true
+  },
+  {
     "slug": "api-documentation-generator",
     "title": "API文档生成器",
     "description": "根据API代码或规范生成专业、完整的API文档，包括端点说明、参数详解和使用示例。",
     "category": "编程开发",
     "rating": 9.2,
     "createdAt": "2025-01-25",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "code-refactoring-guide",
@@ -16,8 +25,7 @@
     "category": "编程开发",
     "rating": 9.1,
     "createdAt": "2025-01-22",
-    "featured": false,
-    "isNew": false
+    "featured": false
   },
   {
     "slug": "code-optimization-assistant",
@@ -26,7 +34,6 @@
     "category": "编程开发",
     "rating": 9.5,
     "createdAt": "2025-01-20",
-    "featured": true,
-    "isNew": false
+    "featured": true
   }
 ]

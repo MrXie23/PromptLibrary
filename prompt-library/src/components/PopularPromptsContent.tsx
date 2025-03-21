@@ -18,12 +18,40 @@ export default function PopularPromptsContent({ prompts }: PopularPromptsContent
     const [loading, setLoading] = useState(true);
     // 设置排序方式的状态
     const [sortMethod, setSortMethod] = useState<'rating' | 'date'>('rating');
+    // 获取最近9个提示的创建时间
+    const [recentPromptDates, setRecentPromptDates] = useState<Date[]>([]);
 
     useEffect(() => {
         if (isLoaded) {
             setLoading(false);
         }
-    }, [isLoaded]);
+
+        // 获取最近9个提示的创建时间
+        if (prompts.length > 0) {
+            const dates = [...prompts]
+                .sort((a, b) => {
+                    if (a.createdAt && b.createdAt) {
+                        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                    }
+                    return 0;
+                })
+                .slice(0, 9)
+                .map(p => p.createdAt ? new Date(p.createdAt) : new Date());
+
+            setRecentPromptDates(dates);
+        }
+    }, [isLoaded, prompts]);
+
+    // 检查提示是否为新提示
+    const isNewPrompt = (prompt: PromptData) => {
+        if (!prompt.createdAt) return false;
+        const promptDate = new Date(prompt.createdAt);
+        return recentPromptDates.some(date =>
+            date.getTime() === promptDate.getTime() ||
+            // 容忍1秒的误差，解决可能的精度问题
+            Math.abs(date.getTime() - promptDate.getTime()) < 1000
+        );
+    };
 
     // 排序函数
     const sortPrompts = (promptList: PromptData[], sortMethod: 'rating' | 'date'): PromptData[] => {
@@ -113,12 +141,12 @@ export default function PopularPromptsContent({ prompts }: PopularPromptsContent
             {/* 提示词列表 */}
             {sortedPrompts.length > 0 ? (
                 <div className={styles['prompt-grid']}>
-                    {sortedPrompts.slice(0, 9).map((prompt, index) => (
+                    {sortedPrompts.slice(0, 9).map((prompt) => (
                         <PromptCard
                             key={prompt.slug}
                             prompt={prompt}
-                            featured={index < 3} // 前三个标记为热门
-                            isNew={prompt.isNew}
+                            featured={prompt.featured}
+                            isNew={isNewPrompt(prompt)}
                         />
                     ))}
                 </div>
