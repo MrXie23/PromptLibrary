@@ -89,7 +89,8 @@
     "no_results": "未找到结果",
     "placeholder": "输入关键词搜索...",
     "searching": "搜索中...",
-    "results_count": "找到{{count}}个结果"
+    "results_count": "找到{{count}}个结果",
+    "enter_query": "请输入搜索内容"
   },
   "subscribe": {
     "title": "订阅更新",

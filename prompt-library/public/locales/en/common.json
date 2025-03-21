@@ -89,7 +89,8 @@
     "no_results": "No results found",
     "placeholder": "Enter keywords to search...",
     "searching": "Searching...",
-    "results_count": "Found {{count}} results"
+    "results_count": "Found {{count}} results",
+    "enter_query": "Enter a search query"
   },
   "subscribe": {
     "title": "Subscribe for Updates",
