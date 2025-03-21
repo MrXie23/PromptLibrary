@@ -2,14 +2,6 @@
  * 提示词元数据
  */
 export interface PromptMetadata {
-  /** 浏览次数 */
-  views: number;
-  /** 点赞数 */
-  likes: number;
-  /** 使用次数 */
-  usageCount: number;
-  /** 收藏次数 */
-  favoriteCount: number;
   /** 创建时间 */
   createdAt: string;
   /** 更新时间 */

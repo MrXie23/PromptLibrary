@@ -89,10 +89,6 @@ export function getPromptBySlug(slug: string): Prompt | null {
       content,
       createdAt: data.createdAt || metadata.createdAt || new Date().toISOString(),
       updatedAt: data.updatedAt || metadata.updatedAt || data.createdAt || metadata.createdAt || new Date().toISOString(),
-      views: metadata.views || 0,
-      likes: metadata.likes || 0,
-      usageCount: metadata.usageCount || 0,
-      favoriteCount: metadata.favoriteCount || 0,
       featured: metadata.featured || false,
       rating: metadata.rating || 0
     };
@@ -166,7 +162,7 @@ export function createPrompt(
       featured: promptData.featured,
       createdAt: promptData.createdAt,
       updatedAt: promptData.updatedAt,
-      rating: promptData.rating,
+      rating: promptData.rating
     };
     
     // 保存元数据文件
@@ -243,7 +239,7 @@ export function updatePrompt(slug: string, promptData: Partial<Prompt>): boolean
       featured: updatedPrompt.featured,
       createdAt: updatedPrompt.createdAt,
       updatedAt: updatedPrompt.updatedAt,
-      rating: updatedPrompt.rating,
+      rating: updatedPrompt.rating
     };
     
     // 保存元数据文件
