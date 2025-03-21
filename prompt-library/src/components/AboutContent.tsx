@@ -33,7 +33,7 @@ export default function AboutContent() {
     }
 
     return (
-        <main className="about-page">
+        <main>
             <section className="page-header">
                 <h1>{t('about.title')}</h1>
                 <p>{t('about.subtitle')}</p>

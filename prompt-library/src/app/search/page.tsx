@@ -177,89 +177,96 @@ export default function SearchPage() {
   );
 
   return (
-    <div className="container mx-auto px-4 py-6 mb-20">
-      <div className="search-page-header">
+    <main>
+      <section className="search-page-header">
         <h1 className="search-title">{t('search.title')}</h1>
         {query && <p className="search-query">{t('hero.search_placeholder')}: "{query}"</p>}
-      </div>
+      </section>
 
       {/* 搜索表单 */}
-      <form className="mb-8" onSubmit={handleSubmit}>
-        <div className="search-container mx-auto max-w-3xl flex items-center border rounded-full shadow-lg overflow-hidden bg-white">
-          <input
-            type="text"
-            name="q"
-            defaultValue={query}
-            placeholder={t('hero.search_placeholder')}
-            className="flex-grow p-4 text-lg border-none focus:outline-none focus:ring-0 w-full"
-          />
-          <button
-            type="submit"
-            className="search-button py-4 px-8 text-lg font-medium bg-blue-500 hover:bg-blue-600 transition-colors text-white"
-            aria-label={t('hero.search_button')}
-          >
-            {t('hero.search_button')}
-          </button>
-        </div>
-      </form>
+      <section>
+        <form className="mb-8" onSubmit={handleSubmit}>
+          <div className="search-container mx-auto max-w-3xl flex items-center border rounded-full shadow-lg overflow-hidden bg-white">
+            <input
+              type="text"
+              name="q"
+              defaultValue={query}
+              placeholder={t('hero.search_placeholder')}
+              className="flex-grow p-4 text-lg border-none focus:outline-none focus:ring-0 w-full"
+            />
+            <button
+              type="submit"
+              className="search-button py-4 px-8 text-lg font-medium bg-blue-500 hover:bg-blue-600 transition-colors text-white"
+              aria-label={t('hero.search_button')}
+            >
+              {t('hero.search_button')}
+            </button>
+          </div>
+        </form>
+      </section>
 
       {/* 搜索结果 */}
-      {loading ? (
-        <div className="loading-container">
-          <div className="loading">
-            <div className="spinner"></div>
-            <p>{t('ui.loading')}</p>
+      <section>
+        {loading ? (
+          <div className="loading-container">
+            <div className="loading">
+              <div className="spinner"></div>
+              <p>{t('ui.loading')}</p>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="search-results-wrapper">
-          {results.length > 0 ? (
-            <>
-              <p className="search-results-count">{t('search.results_count', { count: results.length.toString() })}</p>
-              <div className="search-results">
-                {results.map(result => (
-                  <div
-                    key={result.id}
-                    className="prompt-card"
-                    onClick={(e) => handleResultClick(result.path, e)}
-                  >
-                    <h2 className="prompt-card-title">
+        ) : (
+          <div className="search-results-wrapper">
+            {results.length > 0 ? (
+              <>
+                <p className="search-results-count">{t('search.results_count', { count: results.length.toString() })}</p>
+                <div className="search-results">
+                  {results.map(result => (
+                    <div
+                      key={result.id}
+                      className="prompt-card"
+                      onClick={(e) => handleResultClick(result.path, e)}
+                    >
+                      <h2 className="prompt-card-title">
+                        <Link
+                          href={result.path}
+                          className="prompt-title-link"
+                          onClick={handleLinkClick}
+                        >
+                          {result.title}
+                        </Link>
+                      </h2>
+                      <p className="prompt-card-excerpt">{result.excerpt}</p>
                       <Link
                         href={result.path}
-                        className="prompt-title-link"
+                        className="view-button"
                         onClick={handleLinkClick}
                       >
-                        {result.title}
+                        {t('prompt_card.view_button')}
                       </Link>
-                    </h2>
-                    <p className="prompt-card-excerpt">{result.excerpt}</p>
-                    <Link
-                      href={result.path}
-                      className="view-button"
-                      onClick={handleLinkClick}
-                    >
-                      {t('prompt_card.view_button')}
-                    </Link>
-                  </div>
-                ))}
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : query ? (
+              <div className="empty-state">
+                <div className="empty-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 2C5.14585 2 2 5.14585 2 9C2 12.8541 5.14585 16 9 16C10.748 16 12.345 15.348 13.5742 14.2813L14 14.707V16L20 22L22 20L16 14H14.707L14.2813 13.5742C15.348 12.345 16 10.748 16 9C16 5.14585 12.8541 2 9 2ZM9 4C11.7733 4 14 6.22673 14 9C14 11.7733 11.7733 14 9 14C6.22673 14 4 11.7733 4 9C4 6.22673 6.22673 4 9 4Z" fill="#ccc" />
+                  </svg>
+                </div>
+                <h2 className="empty-title">{t('search.no_results')}</h2>
+                <p className="empty-description">
+                  {emptySearchDescription}
+                </p>
               </div>
-            </>
-          ) : query ? (
-            <div className="empty-state">
-              <div className="empty-icon">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M21 21L17 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+            ) : (
+              <div className="empty-state">
+                <h2 className="empty-title">{t('search.enter_query')}</h2>
               </div>
-              <p className="empty-title">{t('search.no_results')}</p>
-              <p className="empty-description">
-                {emptySearchDescription}
-              </p>
-            </div>
-          ) : null}
-        </div>
-      )}
-    </div>
+            )}
+          </div>
+        )}
+      </section>
+    </main>
   );
 }

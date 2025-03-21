@@ -1493,3 +1493,30 @@ body.dark-mode .mobile-menu-toggle {
     font-size: 1.25rem;
   }
 }
+
+/* 确保所有页面的主要内容元素都有一致的最大宽度和居中对齐 */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+section {
+  margin: 80px 0;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* 确保其他主要内容元素也有正确的最大宽度 */
+.section-header,
+.prompt-grid,
+.category-container,
+.subscribe {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
