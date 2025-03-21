@@ -219,7 +219,7 @@ export default function SearchPage() {
             {results.length > 0 ? (
               <>
                 <p className="search-results-count">{t('search.results_count', { count: results.length.toString() })}</p>
-                <div className="search-results">
+                <div className="prompt-grid">
                   {results.map(result => (
                     <div
                       key={result.id}

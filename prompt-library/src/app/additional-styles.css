@@ -443,6 +443,13 @@ body .markdown-content.scrolled-bottom:not(.expanded)::after {
   }
 }
 
+/* 平板设备响应式设计 */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .prompt-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .empty-state {
   text-align: center;
   padding: 48px 0;
