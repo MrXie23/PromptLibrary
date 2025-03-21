@@ -1,7 +1,6 @@
 {
-  "slug": "learning-plan-generator",
-  "rating": 9.6,
+  "featured": false,
   "createdAt": "2025-02-10",
-  "featured": true,
-  "isNew": true
-} 
+  "updatedAt": "2025-03-21T06:55:11.798Z",
+  "rating": 9.6
+}

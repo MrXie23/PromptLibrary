@@ -6,8 +6,6 @@ import {
     TagIcon
 } from '@heroicons/react/24/solid';
 import { Prompt, CategoryData } from '@/types';
-import { getAllPrompts } from '@/lib/promptUtils';
-import { getAllCategories } from '@/lib/categoryUtils';
 
 export default function Stats() {
     const [prompts, setPrompts] = useState<Prompt[]>([]);
@@ -18,13 +16,27 @@ export default function Stats() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // 获取所有提示
-                const allPrompts = await getAllPrompts();
-                setPrompts(allPrompts);
+                // 获取所有提示 - 使用API
+                const promptsResponse = await fetch('/api/prompts');
+                if (promptsResponse.ok) {
+                    const allPrompts = await promptsResponse.json();
+                    setPrompts(allPrompts);
+                    console.log(`成功获取${allPrompts.length}个提示词`);
+                } else {
+                    console.error('获取提示API响应错误:', promptsResponse.status);
+                    setError('加载提示数据失败');
+                }
 
-                // 获取所有分类
-                const allCategories = await getAllCategories();
-                setCategories(allCategories);
+                // 获取所有分类 - 使用API
+                const categoriesResponse = await fetch('/api/categories');
+                if (categoriesResponse.ok) {
+                    const allCategories = await categoriesResponse.json();
+                    setCategories(allCategories);
+                    console.log(`成功获取${allCategories.length}个分类`);
+                } else {
+                    console.error('获取分类API响应错误:', categoriesResponse.status);
+                    setError('加载分类数据失败');
+                }
             } catch (error) {
                 console.error('获取数据时出错:', error);
                 setError('加载数据失败');
@@ -43,7 +55,7 @@ export default function Stats() {
         // 按分类统计
         const promptsByCategory: Record<string, number> = {};
 
-        // 按评分统计 - 这里我们使用默认值，因为 rating 字段可能不存在
+        // 按评分统计
         const promptsByRating: Record<string, number> = {
             '1-2分': 0,
             '3-4分': 0,
@@ -59,20 +71,47 @@ export default function Stats() {
         let featuredCount = 0;
         let newCount = 0;
 
-        // 由于 Prompt 类型中没有 rating 字段，我们使用默认评分
-        const defaultRating = 8.0;
-        // 最高评分和最低评分的提示 - 我们不再根据评分排序
+        // 评分总和和数量，用于计算平均评分
+        let ratingSum = 0;
+        let ratingCount = 0;
+
+        // 最高评分和最低评分的提示
         let highestRatedPrompt = prompts[0];
+        let highestRating = prompts[0].rating || 0;
         let lowestRatedPrompt = prompts[0];
+        let lowestRating = prompts[0].rating || 10;
 
         prompts.forEach(prompt => {
             // 按分类统计
             const category = prompt.category;
             promptsByCategory[category] = (promptsByCategory[category] || 0) + 1;
 
-            // 不再按评分统计，因为评分字段可能不存在
-            // 我们可以将所有提示归类到默认档位
-            promptsByRating['7-8分']++;
+            // 按评分统计
+            const rating = prompt.rating || 0;
+            if (rating > 0) {
+                if (rating <= 2) promptsByRating['1-2分']++;
+                else if (rating <= 4) promptsByRating['3-4分']++;
+                else if (rating <= 6) promptsByRating['5-6分']++;
+                else if (rating <= 8) promptsByRating['7-8分']++;
+                else promptsByRating['9-10分']++;
+
+                // 累加评分
+                ratingSum += rating;
+                ratingCount++;
+
+                // 更新最高和最低评分
+                if (rating > highestRating) {
+                    highestRating = rating;
+                    highestRatedPrompt = prompt;
+                }
+                if (rating < lowestRating) {
+                    lowestRating = rating;
+                    lowestRatedPrompt = prompt;
+                }
+            } else {
+                // 如果没有评分，默认归类到7-8分
+                promptsByRating['7-8分']++;
+            }
 
             // 按月份统计
             const date = new Date(prompt.createdAt);
@@ -84,8 +123,8 @@ export default function Stats() {
             if (prompt.isNew) newCount++;
         });
 
-        // 不再计算平均评分，使用默认值
-        const averageRating = defaultRating;
+        // 计算平均评分
+        const averageRating = ratingCount > 0 ? ratingSum / ratingCount : 8.0;
 
         return {
             totalPrompts: prompts.length,
@@ -97,8 +136,8 @@ export default function Stats() {
             averageRating,
             highestRatedPrompt,
             lowestRatedPrompt,
-            // 为了避免在模板中使用可能不存在的字段，我们直接提供默认评分
-            defaultRating
+            highestRating,
+            lowestRating
         };
     }, [prompts]);
 
@@ -262,7 +301,7 @@ export default function Stats() {
                                         <h4 className="font-medium">{statsData.highestRatedPrompt.title}</h4>
                                         <div className="flex items-center text-amber-500">
                                             <StarIcon className="w-4 h-4 mr-1" />
-                                            <span>{statsData.defaultRating.toFixed(1)}</span>
+                                            <span>{statsData.highestRating.toFixed(1)}</span>
                                         </div>
                                     </div>
                                     <p className="text-sm text-apple-darkGray line-clamp-2">
@@ -278,7 +317,7 @@ export default function Stats() {
                                         <h4 className="font-medium">{statsData.lowestRatedPrompt.title}</h4>
                                         <div className="flex items-center text-amber-500">
                                             <StarIcon className="w-4 h-4 mr-1" />
-                                            <span>{statsData.defaultRating.toFixed(1)}</span>
+                                            <span>{statsData.lowestRating.toFixed(1)}</span>
                                         </div>
                                     </div>
                                     <p className="text-sm text-apple-darkGray line-clamp-2">

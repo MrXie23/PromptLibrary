@@ -106,7 +106,7 @@ header {
   top: 0;
   backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, 0.8);
-  z-index: 100;
+  z-index: 1000;
   border-bottom: 1px solid var(--border-color);
   width: 100%;
 }
@@ -121,12 +121,16 @@ nav {
   width: 100%;
   padding-left: 20px;
   padding-right: 20px;
+  position: relative;
+  z-index: inherit;
 }
 
 .logo {
   font-size: 24px;
   font-weight: 700;
   color: var(--primary-color);
+  position: relative;
+  z-index: 1001;
 }
 
 .logo span {
@@ -141,6 +145,8 @@ nav {
 .nav-links a {
   color: var(--text-secondary);
   font-weight: 500;
+  position: relative;
+  z-index: 1001;
 }
 
 .nav-links a:hover,
@@ -163,6 +169,8 @@ nav {
   justify-content: center;
   color: var(--text-secondary);
   background-color: var(--card-background);
+  position: relative;
+  z-index: 1001;
 }
 
 .nav-actions button:hover,
@@ -200,43 +208,46 @@ nav {
 .search-container {
   display: flex;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   position: relative;
+  border-radius: 100px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .search-container input {
   flex: 1;
-  padding: 12px 20px;
-  font-size: 16px;
-  border-radius: 100px;
+  padding: 16px 24px;
+  font-size: 18px;
+  border-radius: 100px 0 0 100px;
   border: none;
   background-color: var(--card-background);
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
 }
 
 .search-container input:focus {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   background-color: var(--background-color);
 }
 
 .search-button {
   background-color: var(--primary-color);
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
-  padding: 12px 20px;
-  border-radius: 100px;
-  margin-left: -45px;
+  padding: 16px 32px;
+  border-radius: 0 100px 100px 0;
   z-index: 1;
   transition: all 0.3s ease;
+  margin-left: 0;
 }
 
 .search-button:hover {
   background-color: var(--highlight-color);
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
 }
 
 /* 提示词卡片样式 */
@@ -1347,5 +1358,138 @@ body.dark-mode .mobile-menu-toggle {
 
   .language-options {
     font-size: 0.8rem;
+  }
+}
+
+/* 搜索页面样式增强 */
+.search-page-header {
+  margin-bottom: 2rem;
+}
+
+.search-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.search-query {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+.search-results-wrapper {
+  margin-bottom: 6rem;
+  /* 增加底部间距，从4rem改为6rem */
+}
+
+.search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  /* 添加额外的底部间距 */
+}
+
+.search-results .prompt-card {
+  position: relative;
+  cursor: pointer;
+}
+
+.search-results .prompt-card:hover {
+  transform: translateY(-2px);
+}
+
+.search-results .prompt-title-link {
+  display: block;
+  position: relative;
+  z-index: 10;
+  /* 确保链接在最上层 */
+  color: var(--text-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.search-results .prompt-title-link:hover {
+  color: var(--primary-color);
+}
+
+.search-results .prompt-card-excerpt {
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.search-results .view-button {
+  position: relative;
+  z-index: 10;
+  /* 确保按钮在最上层 */
+  display: inline-flex;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+}
+
+.search-results-count {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background-color: var(--card-background);
+  border-radius: var(--radius);
+  margin-bottom: 6rem;
+  /* 增加底部间距，从4rem改为6rem */
+}
+
+.empty-icon {
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.empty-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.empty-description {
+  text-align: center;
+  color: var(--text-secondary);
+  max-width: 500px;
+}
+
+.empty-description .text-link {
+  color: var(--primary-color);
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+.empty-description .text-link:hover {
+  text-decoration: underline;
+}
+
+/* 适配移动设备 */
+@media (max-width: 768px) {
+  .search-title {
+    font-size: 2rem;
+  }
+
+  .search-results .prompt-title-link {
+    font-size: 1.25rem;
+  }
+
+  .empty-state {
+    padding: 3rem 1.5rem;
+  }
+
+  .empty-title {
+    font-size: 1.25rem;
   }
 }

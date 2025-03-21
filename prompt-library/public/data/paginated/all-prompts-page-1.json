@@ -1,5 +1,15 @@
 [
   {
+    "slug": "cusor-rule-sample",
+    "title": "cursor rule提示词样例",
+    "description": "在cursor中使用，用来指导约束AI，使AI编码效率更高",
+    "category": "编程开发",
+    "createdAt": "2025-03-21",
+    "updatedAt": "2025-03-21T08:03:20.578Z",
+    "rating": 10,
+    "featured": true
+  },
+  {
     "slug": "story-claude-generator",
     "title": "故事创作助手",
     "description": "与用户协作创作引人入胜的故事，提供情节转折和人物发展建议。",
@@ -8,12 +18,7 @@
     "tags": [],
     "createdAt": "2025-03-20",
     "updatedAt": "2025-03-20T08:21:09.743Z",
-    "views": 0,
-    "likes": 0,
-    "usageCount": 0,
-    "favoriteCount": 0,
-    "featured": false,
-    "isNew": false
+    "featured": false
   },
   {
     "slug": "email-marketing-campaign",
@@ -22,8 +27,7 @@
     "category": "营销推广",
     "rating": 9,
     "createdAt": "2025-02-18",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "social-media-content-calendar",
@@ -32,38 +36,43 @@
     "category": "营销推广",
     "rating": 8.9,
     "createdAt": "2025-02-12",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "ui-design-system-creator",
     "title": "UI设计系统创建器",
     "description": "构建完整的用户界面设计系统，包括组件规范、色彩系统、排版规则和交互模式。",
     "category": "创意设计",
-    "rating": 9.6,
-    "createdAt": "2025-02-12",
+    "author": "",
+    "tags": [],
     "featured": true,
-    "isNew": true
+    "createdAt": "2025-02-12",
+    "updatedAt": "2025-03-21T06:55:35.139Z",
+    "rating": 9.6
   },
   {
     "slug": "learning-plan-generator",
     "title": "学习计划生成器",
     "description": "为任何主题或技能创建个性化的、结构化的学习路径，包含里程碑、资源和时间表。",
     "category": "教育学习",
-    "rating": 9.6,
+    "author": "",
+    "tags": [],
+    "featured": false,
     "createdAt": "2025-02-10",
-    "featured": true,
-    "isNew": true
+    "updatedAt": "2025-03-21T06:55:11.798Z",
+    "rating": 9.6
   },
   {
     "slug": "website-design-consultant",
     "title": "网站设计顾问",
     "description": "根据业务需求和目标受众提供详细的网站设计建议，包括布局、色彩方案和用户体验优化。",
     "category": "创意设计",
-    "rating": 9.5,
+    "author": "",
+    "tags": [],
+    "featured": false,
     "createdAt": "2025-02-08",
-    "featured": true,
-    "isNew": true
+    "updatedAt": "2025-03-21T06:56:58.641Z",
+    "rating": 9.5
   },
   {
     "slug": "blog-content-planner",
@@ -72,27 +81,18 @@
     "category": "内容创作",
     "rating": 9.4,
     "createdAt": "2025-02-05",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "digital-marketing-strategy",
     "title": "数字营销策略规划",
     "description": "根据业务目标和目标受众创建全面的数字营销策略，包括渠道选择、内容计划和KPI设定。",
     "category": "营销推广",
-    "rating": 9.2,
-    "createdAt": "2025-02-05",
-    "featured": true,
-    "isNew": false
-  },
-  {
-    "slug": "logo-design-brief",
-    "title": "Logo设计指南",
-    "description": "根据品牌价值观和目标受众创建详细的Logo设计方案，包括风格、颜色、字体和应用场景建议。",
-    "category": "创意设计",
-    "rating": 9.4,
-    "createdAt": "2025-02-05",
+    "author": "",
+    "tags": [],
     "featured": false,
-    "isNew": true
+    "createdAt": "2025-02-05",
+    "updatedAt": "2025-03-21T06:56:49.127Z",
+    "rating": 9.2
   }
 ]

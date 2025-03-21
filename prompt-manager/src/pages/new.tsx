@@ -3,8 +3,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { ArrowLeftIcon, PencilIcon } from '@heroicons/react/24/outline';
 import { CategoryData, Prompt } from '@/types';
-import { createNewPrompt } from '@/lib/promptUtils';
-import { getAllCategories } from '@/lib/categoryUtils';
 import { format } from 'date-fns';
 
 export default function NewPrompt() {
@@ -26,7 +24,12 @@ export default function NewPrompt() {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const allCategories = await getAllCategories();
+                // 使用API获取分类数据
+                const response = await fetch('/api/categories');
+                if (!response.ok) {
+                    throw new Error('获取分类API响应错误:' + response.status);
+                }
+                const allCategories = await response.json();
                 setCategories(allCategories);
 
                 // 设置默认分类
@@ -77,13 +80,22 @@ export default function NewPrompt() {
         }
 
         try {
-            const createdPrompt = await createNewPrompt(newPrompt);
+            // 使用API创建提示
+            const response = await fetch('/api/prompts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newPrompt),
+            });
 
-            if (createdPrompt) {
+            if (response.ok) {
+                const createdPrompt = await response.json();
                 // 成功创建，跳转到提示详情页
                 router.push(`/prompts/${createdPrompt.slug}`);
             } else {
-                setError('创建提示失败');
+                const errorData = await response.json();
+                setError(`创建提示失败: ${errorData.error || '未知错误'}`);
             }
         } catch (error) {
             console.error('创建提示时出错:', error);

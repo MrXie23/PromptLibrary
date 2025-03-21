@@ -133,6 +133,8 @@
     "no_popular_prompts": "暂无热门提示词",
     "popular_prompts_coming_soon": "我们正在收集用户反馈，很快将添加热门提示词",
     "all_prompts": "所有提示词",
-    "browse_by_category": "按分类浏览"
+    "browse_by_category": "按分类浏览",
+    "expand": "展开全部",
+    "collapse": "收起内容"
   }
 } 

@@ -1,8 +1,10 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '../../lib/i18n';
+import { useLanguage } from '../../context/LanguageContext';
 
 // 定义搜索结果类型
 interface SearchResult {
@@ -31,117 +33,172 @@ export default function SearchPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
   const router = useRouter();
+  const { t, isLoaded: translationsLoaded } = useTranslation('common');
+  const { locale } = useLanguage();
 
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [index, setIndex] = useState<IndexItem[]>([]);
+  const [indexLoaded, setIndexLoaded] = useState(false);
+
+  // 使用ref跟踪已加载状态，避免重复加载
+  const hasLoadedIndex = useRef(false);
+  const hasSearched = useRef(false);
 
   // 加载索引文件
   useEffect(() => {
+    // 如果已经加载过索引，或者已经在加载中，则跳过
+    if (hasLoadedIndex.current || loading) return;
+
     async function loadIndex() {
-      console.log('尝试加载索引文件...');
+      if (hasLoadedIndex.current) return;
+
+      hasLoadedIndex.current = true;
+      setLoading(true);
+
       try {
         // 使用绝对路径加载索引文件
         const baseUrl = window.location.origin;
         const indexUrl = `${baseUrl}/PromptLibrary/data/prompts-index.json`;
-        console.log('加载URL:', indexUrl);
 
         const response = await fetch(indexUrl);
         if (!response.ok) {
-          console.error('索引文件加载失败:', response.status, response.statusText);
           throw new Error(`Failed to load index: ${response.status} ${response.statusText}`);
         }
+
         const data = await response.json();
-        console.log('索引数据加载成功:', data);
         setIndex(data);
+        setIndexLoaded(true);
+
+        // 如果有查询参数，触发搜索
+        if (query) {
+          performSearch(data, query);
+        }
       } catch (error) {
-        console.error('加载索引时出错:', error);
-      }
-    }
-
-    loadIndex();
-  }, []);
-
-  // 执行搜索
-  useEffect(() => {
-    if (!query || index.length === 0) return;
-
-    async function performSearch() {
-      setLoading(true);
-
-      try {
-        // 首先从索引中筛选可能的匹配项
-        const possibleMatches = index.filter(item => {
-          // 确保 item.slug 是一个有效的字符串，并且不包含 HTML
-          if (!item.slug || typeof item.slug !== 'string' || item.slug.includes('<')) {
-            console.log('Invalid slug:', item);
-            return false;
-          }
-          return item.title?.toLowerCase().includes(query.toLowerCase()) ||
-            item.tags?.some((tag: string) => tag.toLowerCase().includes(query.toLowerCase()));
-        });
-
-        console.log('匹配的项目:', possibleMatches);
-
-        // 直接使用索引中的数据
-        const searchResults = possibleMatches.map(item => {
-          console.log('处理搜索结果项目:', item);
-          console.log('该项目的description:', item.description);
-
-          const result = {
-            id: item.slug,
-            title: item.title,
-            excerpt: item.description || '暂无描述',
-            path: `/prompts/${item.slug}`
-          };
-
-          console.log('生成的搜索结果项:', result);
-          return result;
-        });
-
-        console.log('最终搜索结果:', searchResults);
-        setResults(searchResults);
-      } catch (error) {
-        console.error('搜索过程中出错:', error);
+        console.error(`加载索引时出错:`, error);
+        hasLoadedIndex.current = false;
       } finally {
         setLoading(false);
       }
     }
 
-    performSearch();
-  }, [query, index]);
+    loadIndex();
+  }, [query]); // 只在query变化时重新加载
+
+  // 执行搜索函数
+  const performSearch = useCallback((indexData: IndexItem[], searchQuery: string) => {
+    if (!searchQuery || !indexData.length || hasSearched.current) return;
+
+    hasSearched.current = true;
+    setLoading(true);
+
+    try {
+      // 从索引中筛选匹配项
+      const possibleMatches = indexData.filter(item => {
+        if (!item.slug || typeof item.slug !== 'string') {
+          return false;
+        }
+
+        return item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.tags?.some((tag: string) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+      });
+
+      // 构建搜索结果
+      const searchResults = possibleMatches.map(item => ({
+        id: item.slug,
+        title: item.title,
+        excerpt: item.description || t('ui.no_data'),
+        path: `/prompts/${item.slug}`
+      }));
+
+      setResults(searchResults);
+    } catch (error) {
+      console.error(`搜索过程中出错:`, error);
+    } finally {
+      setLoading(false);
+    }
+  }, [t]);
+
+  // 当索引加载完成且有查询参数时执行搜索
+  useEffect(() => {
+    if (indexLoaded && query && !hasSearched.current) {
+      performSearch(index, query);
+    }
+  }, [indexLoaded, query, index, performSearch]);
+
+  // 在路由变化时重置搜索状态
+  useEffect(() => {
+    return () => {
+      hasSearched.current = false; // 组件卸载时重置搜索状态
+    };
+  }, [query]);
 
   // 处理搜索表单提交
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    hasSearched.current = false; // 重置搜索状态
     const formData = new FormData(e.currentTarget);
     const searchQuery = formData.get('q')?.toString() || '';
-    router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
-  };
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  }, [router]);
+
+  // 处理点击链接
+  const handleLinkClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.stopPropagation(); // 仅阻止事件冒泡，不阻止默认行为
+  }, []);
+
+  // 处理点击搜索结果项
+  const handleResultClick = useCallback((path: string, e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+
+    // 如果点击的是链接或链接内部元素，让链接自己处理
+    if (target.tagName === 'A' || target.closest('a')) {
+      return;
+    }
+
+    // 否则手动导航
+    router.push(path);
+  }, [router]);
+
+  // 搜索结果为空时的提示文本
+  const emptySearchDescription = (
+    <>
+      {t('ui.try_again')} {t('ui.browse_by_category')}
+      <Link
+        href="/categories"
+        className="text-link"
+      >
+        {t('nav.categories')}
+      </Link>
+    </>
+  );
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="container mx-auto px-4 py-6 mb-20">
       <div className="search-page-header">
-        <h1 className="search-title">搜索结果</h1>
-        {query && <p className="search-query">搜索："{query}"</p>}
+        <h1 className="search-title">{t('search.title')}</h1>
+        {query && <p className="search-query">{t('hero.search_placeholder')}: "{query}"</p>}
       </div>
 
       {/* 搜索表单 */}
-      <form className="mb-6" onSubmit={handleSubmit}>
-        <div className="search-container">
+      <form className="mb-8" onSubmit={handleSubmit}>
+        <div className="search-container mx-auto max-w-3xl flex items-center border rounded-full shadow-lg overflow-hidden bg-white">
           <input
             type="text"
             name="q"
             defaultValue={query}
-            placeholder="搜索提示词..."
-            className="flex-grow p-3 rounded-l-full"
+            placeholder={t('hero.search_placeholder')}
+            className="flex-grow p-4 text-lg border-none focus:outline-none focus:ring-0 w-full"
           />
           <button
             type="submit"
-            className="search-button"
-            aria-label="搜索"
+            className="search-button py-4 px-8 text-lg font-medium bg-blue-500 hover:bg-blue-600 transition-colors text-white"
+            aria-label={t('hero.search_button')}
           >
-            搜索
+            {t('hero.search_button')}
           </button>
         </div>
       </form>
@@ -151,25 +208,37 @@ export default function SearchPage() {
         <div className="loading-container">
           <div className="loading">
             <div className="spinner"></div>
-            <p>正在搜索...</p>
+            <p>{t('ui.loading')}</p>
           </div>
         </div>
       ) : (
-        <div>
+        <div className="search-results-wrapper">
           {results.length > 0 ? (
             <>
-              <p className="search-results-count">找到 {results.length} 个结果</p>
+              <p className="search-results-count">{t('search.results_count', { count: results.length.toString() })}</p>
               <div className="search-results">
                 {results.map(result => (
-                  <div key={result.id} className="prompt-card">
+                  <div
+                    key={result.id}
+                    className="prompt-card"
+                    onClick={(e) => handleResultClick(result.path, e)}
+                  >
                     <h2 className="prompt-card-title">
-                      <Link href={result.path} className="prompt-title-link">
+                      <Link
+                        href={result.path}
+                        className="prompt-title-link"
+                        onClick={handleLinkClick}
+                      >
                         {result.title}
                       </Link>
                     </h2>
                     <p className="prompt-card-excerpt">{result.excerpt}</p>
-                    <Link href={result.path} className="view-button">
-                      查看完整提示词
+                    <Link
+                      href={result.path}
+                      className="view-button"
+                      onClick={handleLinkClick}
+                    >
+                      {t('prompt_card.view_button')}
                     </Link>
                   </div>
                 ))}
@@ -183,8 +252,10 @@ export default function SearchPage() {
                   <path d="M21 21L17 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <p className="empty-title">未找到匹配的提示词</p>
-              <p className="empty-description">尝试使用其他关键词或浏览<Link href="/categories" className="text-link">分类</Link>查找</p>
+              <p className="empty-title">{t('search.no_results')}</p>
+              <p className="empty-description">
+                {emptySearchDescription}
+              </p>
             </div>
           ) : null}
         </div>

@@ -4,8 +4,6 @@ import { PlusIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/24/solid';
 import PromptCard from '@/components/PromptCard';
 import { Prompt, CategoryData } from '@/types';
-import { getAllPrompts } from '@/lib/promptUtils';
-import { getAllCategories } from '@/lib/categoryUtils';
 
 export default function Home() {
     const [prompts, setPrompts] = useState<Prompt[]>([]);
@@ -17,18 +15,23 @@ export default function Home() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // 在客户端获取数据
-                const allPrompts = await getAllPrompts();
+                // 通过API路由获取数据
+                const promptsResponse = await fetch('/api/prompts');
+                const allPrompts = await promptsResponse.json() as Prompt[];
                 setPrompts(allPrompts);
 
                 // 过滤精选提示
-                setFeaturedPrompts(allPrompts.filter(prompt => prompt.featured).slice(0, 4));
+                setFeaturedPrompts(allPrompts.filter((prompt: Prompt) => prompt.featured).slice(0, 4));
 
-                // 过滤新的提示
-                setNewPrompts(allPrompts.filter(prompt => prompt.isNew).slice(0, 4));
+                // 获取最新提示（按创建时间排序）
+                const sortedByDate = [...allPrompts].sort((a: Prompt, b: Prompt) =>
+                    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                );
+                setNewPrompts(sortedByDate.slice(0, 4));
 
                 // 获取分类
-                const allCategories = await getAllCategories();
+                const categoriesResponse = await fetch('/api/categories');
+                const allCategories = await categoriesResponse.json();
                 setCategories(allCategories);
             } catch (error) {
                 console.error('获取数据时出错:', error);
@@ -105,7 +108,10 @@ export default function Home() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {featuredPrompts.length > 0 ? (
                         featuredPrompts.map(prompt => (
-                            <PromptCard key={prompt.slug} prompt={prompt} />
+                            <PromptCard
+                                key={prompt.slug}
+                                prompt={prompt}
+                            />
                         ))
                     ) : (
                         <p className="text-apple-darkGray col-span-2">暂无精选提示</p>
@@ -129,7 +135,11 @@ export default function Home() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {newPrompts.length > 0 ? (
                         newPrompts.map(prompt => (
-                            <PromptCard key={prompt.slug} prompt={prompt} />
+                            <PromptCard
+                                key={prompt.slug}
+                                prompt={prompt}
+                                isNew={true}
+                            />
                         ))
                     ) : (
                         <div className="col-span-2 card-apple flex flex-col items-center justify-center py-10">

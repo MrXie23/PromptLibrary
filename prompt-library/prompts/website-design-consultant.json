@@ -1,7 +1,6 @@
 {
-  "slug": "website-design-consultant",
-  "rating": 9.5,
+  "featured": false,
   "createdAt": "2025-02-08",
-  "featured": true,
-  "isNew": true
-} 
+  "updatedAt": "2025-03-21T06:56:58.641Z",
+  "rating": 9.5
+}

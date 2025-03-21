@@ -4,10 +4,12 @@
     "title": "学习计划生成器",
     "description": "为任何主题或技能创建个性化的、结构化的学习路径，包含里程碑、资源和时间表。",
     "category": "教育学习",
-    "rating": 9.6,
+    "author": "",
+    "tags": [],
+    "featured": false,
     "createdAt": "2025-02-10",
-    "featured": true,
-    "isNew": true
+    "updatedAt": "2025-03-21T06:55:11.798Z",
+    "rating": 9.6
   },
   {
     "slug": "exam-question-generator",
@@ -16,8 +18,7 @@
     "category": "教育学习",
     "rating": 9.4,
     "createdAt": "2025-02-01",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "concept-explainer",
@@ -26,7 +27,6 @@
     "category": "教育学习",
     "rating": 9.3,
     "createdAt": "2025-01-30",
-    "featured": false,
-    "isNew": false
+    "featured": false
   }
 ]

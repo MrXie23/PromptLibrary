@@ -3,62 +3,10 @@ import path from 'path';
 import { CategoryData } from '@/types';
 import { safeReadFile, safeWriteFile, safeParseJson } from './utils';
 import { getAllPrompts } from './promptUtils';
+import { CATEGORIES } from '@/config/categories';
 
 // 分类配置文件路径
-const CATEGORIES_FILE_PATH = path.join(process.cwd(), '..', 'prompt-library', 'src', 'config', 'categories.json');
-
-// 默认分类
-const DEFAULT_CATEGORIES: CategoryData[] = [
-  { 
-    slug: 'content-creation', 
-    name: '内容创作', 
-    nameKey: 'categories.content_creation',
-    icon: 'fa-pen-fancy', 
-    count: 0 
-  },
-  { 
-    slug: 'programming', 
-    name: '编程开发', 
-    nameKey: 'categories.programming',
-    icon: 'fa-code', 
-    count: 0 
-  },
-  { 
-    slug: 'creative-design', 
-    name: '创意设计', 
-    nameKey: 'categories.creative_design',
-    icon: 'fa-palette', 
-    count: 0 
-  },
-  { 
-    slug: 'data-analysis', 
-    name: '数据分析', 
-    nameKey: 'categories.data_analysis',
-    icon: 'fa-chart-line', 
-    count: 0 
-  },
-  { 
-    slug: 'marketing', 
-    name: '营销推广', 
-    nameKey: 'categories.marketing',
-    icon: 'fa-bullhorn', 
-    count: 0 
-  },
-  { 
-    slug: 'education', 
-    name: '教育学习', 
-    nameKey: 'categories.education',
-    icon: 'fa-graduation-cap', 
-    count: 0 
-  },
-  { 
-    slug: 'other', 
-    name: '其他', 
-    nameKey: 'categories.other',
-    icon: 'fa-ellipsis', 
-    count: 0 
-  }
-];
+const CATEGORIES_FILE_PATH = path.join(process.cwd(), 'src', 'config', 'categories.json');
 
 /**
  * 获取所有分类数据
@@ -79,7 +27,7 @@ export function getAllCategories(): CategoryData[] {
   }
   
   // 如果配置文件不存在或读取失败，使用默认分类
-  return updateCategoryCounts([...DEFAULT_CATEGORIES]);
+  return updateCategoryCounts([...CATEGORIES]);
 }
 
 /**

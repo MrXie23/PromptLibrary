@@ -6,8 +6,7 @@
     "category": "营销推广",
     "rating": 9,
     "createdAt": "2025-02-18",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "social-media-content-calendar",
@@ -16,17 +15,18 @@
     "category": "营销推广",
     "rating": 8.9,
     "createdAt": "2025-02-12",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "digital-marketing-strategy",
     "title": "数字营销策略规划",
     "description": "根据业务目标和目标受众创建全面的数字营销策略，包括渠道选择、内容计划和KPI设定。",
     "category": "营销推广",
-    "rating": 9.2,
+    "author": "",
+    "tags": [],
+    "featured": false,
     "createdAt": "2025-02-05",
-    "featured": true,
-    "isNew": false
+    "updatedAt": "2025-03-21T06:56:49.127Z",
+    "rating": 9.2
   }
 ]

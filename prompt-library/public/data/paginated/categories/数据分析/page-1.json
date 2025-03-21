@@ -6,8 +6,7 @@
     "category": "数据分析",
     "rating": 9.4,
     "createdAt": "2025-02-03",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "data-visualization-guide",
@@ -16,17 +15,18 @@
     "category": "数据分析",
     "rating": 9.3,
     "createdAt": "2025-01-27",
-    "featured": false,
-    "isNew": false
+    "featured": false
   },
   {
     "slug": "data-analysis-plan",
     "title": "数据分析计划生成器",
     "description": "根据具体业务问题和可用数据创建完整的数据分析计划，包括方法选择、工具建议和预期结果。",
     "category": "数据分析",
-    "rating": 9.5,
+    "author": "",
+    "tags": [],
+    "featured": false,
     "createdAt": "2025-01-18",
-    "featured": true,
-    "isNew": false
+    "updatedAt": "2025-03-21T06:56:38.868Z",
+    "rating": 9.5
   }
 ]

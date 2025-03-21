@@ -1,13 +1,21 @@
 [
   {
+    "slug": "logo-design-brief",
+    "title": "Logo设计指南",
+    "description": "根据品牌价值观和目标受众创建详细的Logo设计方案，包括风格、颜色、字体和应用场景建议。",
+    "category": "创意设计",
+    "rating": 9.4,
+    "createdAt": "2025-02-05",
+    "featured": false
+  },
+  {
     "slug": "predictive-modeling-assistant",
     "title": "预测建模助手",
     "description": "帮助构建和优化预测模型，提供特征选择、模型选择、评估及调优的专业指导。",
     "category": "数据分析",
     "rating": 9.4,
     "createdAt": "2025-02-03",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "exam-question-generator",
@@ -16,8 +24,7 @@
     "category": "教育学习",
     "rating": 9.4,
     "createdAt": "2025-02-01",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "concept-explainer",
@@ -26,8 +33,7 @@
     "category": "教育学习",
     "rating": 9.3,
     "createdAt": "2025-01-30",
-    "featured": false,
-    "isNew": false
+    "featured": false
   },
   {
     "slug": "story-idea-generator",
@@ -36,8 +42,7 @@
     "category": "内容创作",
     "rating": 9.3,
     "createdAt": "2025-01-28",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "data-visualization-guide",
@@ -46,8 +51,7 @@
     "category": "数据分析",
     "rating": 9.3,
     "createdAt": "2025-01-27",
-    "featured": false,
-    "isNew": false
+    "featured": false
   },
   {
     "slug": "api-documentation-generator",
@@ -56,8 +60,7 @@
     "category": "编程开发",
     "rating": 9.2,
     "createdAt": "2025-01-25",
-    "featured": false,
-    "isNew": true
+    "featured": false
   },
   {
     "slug": "code-refactoring-guide",
@@ -66,8 +69,7 @@
     "category": "编程开发",
     "rating": 9.1,
     "createdAt": "2025-01-22",
-    "featured": false,
-    "isNew": false
+    "featured": false
   },
   {
     "slug": "code-optimization-assistant",
@@ -76,17 +78,6 @@
     "category": "编程开发",
     "rating": 9.5,
     "createdAt": "2025-01-20",
-    "featured": true,
-    "isNew": false
-  },
-  {
-    "slug": "data-analysis-plan",
-    "title": "数据分析计划生成器",
-    "description": "根据具体业务问题和可用数据创建完整的数据分析计划，包括方法选择、工具建议和预期结果。",
-    "category": "数据分析",
-    "rating": 9.5,
-    "createdAt": "2025-01-18",
-    "featured": true,
-    "isNew": false
+    "featured": true
   }
 ]
